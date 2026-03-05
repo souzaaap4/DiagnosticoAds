@@ -1,24 +1,31 @@
 # DiagnósticoAds — Landing Page
 
-Landing page de alta conversão para diagnóstico estratégico de anúncios em marketplaces (Mercado Livre, Shopee e Amazon).
+Landing page de alta conversão para diagnóstico estratégico de anúncios em marketplaces (Mercado Livre, Shopee e Amazon).  
+Projeto focado em clareza da proposta, prova social e conversão via formulário com CTA direto.
+
+---
 
 ## Visão Geral
-Esta página foi projetada para guiar o usuário por uma jornada clara: apresentar a proposta, mostrar autoridade, explicar o diagnóstico em vídeo e direcionar para o formulário com CTA direto.
+Esta página foi desenhada para conduzir o usuário por uma sequência objetiva:
+proposta → autoridade → explicação → escassez → formulário → agradecimento.
 
-## Principais Seções
-- Hero com CTA direto para o formulário
-- O que será analisado (lista clara de pontos de diagnóstico)
-- Especialistas e marketplaces atendidos
-- Vídeo explicativo + escassez de horários
+## Funcionalidades
+- CTA principal com scroll suave até o formulário
+- Seção “O que será analisado” com pontos claros e objetivos
+- Área de autoridade com especialistas e marketplaces atendidos
+- Vídeo explicativo com capa personalizada
 - Formulário com redirecionamento ao Calendly
-- Encerramento com agradecimento
+- Layout responsivo para mobile e desktop
 
 ## Stack
 - React + TypeScript
 - Vite
 - Tailwind CSS (utilitários)
 
+---
+
 ## Como rodar localmente
+
 1. Instale as dependências:
 ```bash
 npm install
@@ -38,15 +45,20 @@ npm run build
 ```bash
 npx vite preview
 ```
+---
 
 ## Personalizações rápidas
+
 - **URL do Calendly**: `src/app/components/FormSection.tsx`
 - **Capa do vídeo**: `src/assets/video-capa.png`
 - **Foto dos especialistas**: `src/assets/especialistas.png`
 - **Logos dos marketplaces**: `src/assets/logos/`
-- **Cores e fundo**: `src/styles/theme.css` (variáveis `--lp-*`)
+- **Cores e fundo**: `src/styles/theme.css` (`--lp-*`)
+
+---
 
 ## Estrutura relevante
+
 - `src/app/App.tsx`
 - `src/app/components/HeroSection.tsx`
 - `src/app/components/AnalysisSection.tsx`
@@ -56,11 +68,20 @@ npx vite preview
 - `src/app/components/FinalCTASection.tsx`
 - `src/styles/theme.css`
 
-## Responsividade
-O layout foi ajustado para mobile e desktop, com seções em tela cheia e espaçamentos otimizados para leitura por blocos.
+---
 
-## Desenvolvedora 
+## Responsividade
+O layout foi ajustado para mobile e desktop com:
+- seções em tela cheia
+- tipografia fluida
+- espaçamento consistente entre blocos
+
+---
+
+## Autoria
 Taynara Souza
+
+---
 
 ## Licença
 Este projeto está sob a licença MIT. Consulte o arquivo `LICENSE`.
