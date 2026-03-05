@@ -57,6 +57,13 @@ npx vite preview
 
 ---
 
+## Documentação técnica
+
+A documentação completa de integração n8n está em:
+- `docs/INTEGRACAO_N8N.md`
+
+---
+
 ## Estrutura relevante
 
 - `src/app/App.tsx`
