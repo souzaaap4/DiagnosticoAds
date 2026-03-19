@@ -1,12 +1,16 @@
 # Arquivo de configuração para hospedagem em Apache/HostGator.
-# Garante que a landing page utilize `ads.html` como entrada padrão.
-DirectoryIndex ads.html
+# Define index.html como entrada padrão da landing page.
+DirectoryIndex index.html
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+  RewriteRule ^index\.html$ - [L]
   RewriteRule ^ads\.html$ - [L]
+  RewriteRule ^ads-assets/ - [L]
+  RewriteRule ^tracking\.js$ - [L]
+  RewriteRule ^01\.png$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /ads.html [L]
+  RewriteRule . /index.html [L]
 </IfModule>
