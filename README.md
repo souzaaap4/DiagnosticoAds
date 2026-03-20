@@ -25,6 +25,7 @@ O projeto apresenta uma jornada direta para conversão: proposta de valor, prova
 - `src/assets`: imagens e logos utilizados na interface.
 - `src/styles`: estilos globais e tokens de tema.
 - `docs`: documentação técnica e documentos oficiais.
+- `public/tracking.js`: tracking leve de origem (channel/UTM) para páginas estáticas.
 - `public/htaccess-hostgator.txt`: regra de deploy para Apache/HostGator.
 - `ads.html`: entrada de build usada no Rollup/Vite.
 
@@ -57,9 +58,17 @@ npx vite preview
 - Vídeo explicativo com capa customizada.
 - Formulário com validação básica e seleção de marketplaces.
 - Envio de lead para automação e redirecionamento para agendamento.
+- Tracking de origem (channel + UTMs) persistido em `localStorage` e enviado com o lead.
+
+## Tracking de Origem (Channel + UTM)
+- URLs limpas por canal via `.htaccess` (ex.: `/youtube`, `/instagram` → `?channel=`).
+- Captura de `channel`, `utm_source`, `utm_medium`, `utm_campaign`.
+- Fallback por `document.referrer` (YouTube/Instagram) e valores padrão.
+- Persistência local sem sobrescrever sessões já iniciadas.
+- Campos enviados no lead: `channel`, `source`, `medium`, `campaign`, `timestamp`.
 
 ## Automação e Lógica Principal
-O formulário monta um payload padronizado com data e hora no formato brasileiro e o envia ao webhook do n8n (leads). O envio tenta `navigator.sendBeacon` e, em fallback, utiliza `fetch` com `keepalive`. Após a tentativa de envio, o usuário é redirecionado para a agenda do Google Calendar. O fluxo completo de automação está documentado em `docs/integracao/INTEGRACAO_N8N.md`.
+O formulário monta um payload padronizado com data e hora no formato brasileiro, inclui marketplaces e dados de tracking (origem) e envia ao webhook do n8n (leads). O envio tenta `navigator.sendBeacon` e, em fallback, utiliza `fetch` com `keepalive`. Após a tentativa de envio, o usuário é redirecionado para a agenda do Google Calendar. O fluxo completo de automação está documentado em `docs/integracao/INTEGRACAO_N8N.md`.
 
 ## Autor
 - **Taynara Correia de Souza**

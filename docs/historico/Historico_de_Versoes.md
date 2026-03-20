@@ -4,6 +4,12 @@ Projeto: DiagnosticoAds
 Data: 19/03/2026  
 Responsavel tecnico: Taynara Correia de Souza
 
+## Versao 1.1.4 - 20/03/2026
+- Reintroducao do tracking de origem (channel/UTM) com persistencia em localStorage.
+- URLs limpas por canal via .htaccess e script public/tracking.js.
+- Lead passa a enviar channel/source/medium/campaign/timestamp para o n8n.
+- Ajuste no input de WhatsApp para melhor edicao em mobile.
+
 ## Versao 1.1.3 - 20/03/2026
 - Remocao completa do tracking e captura de UTMs no front-end.
 - Exclusao dos scripts e servicos de tracking (React e HTML estatico).
