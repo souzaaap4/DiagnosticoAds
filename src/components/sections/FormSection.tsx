@@ -64,6 +64,7 @@ export function FormSection() {
   const webhookUrl = "https://n8n.srv1095468.hstgr.cloud/webhook/DiagnosticoAds";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  // Armazena apenas digitos para evitar problemas de edicao no mobile.
   const [whatsapp, setWhatsapp] = useState("");
   const [selected, setSelected] = useState<string[]>([]);
   // Mantido para fluxo futuro de confirmação sem redirect.
@@ -82,19 +83,19 @@ export function FormSection() {
     );
   };
 
+  const toDigits = (value: string) => value.replace(/\D/g, "").slice(0, 11);
+
   /**
    * Formata o número de WhatsApp no padrão (DD) 9XXXX-XXXX.
    *
-   * @param value - Valor digitado no input.
+   * @param digits - Apenas digitos do número.
    * @returns Número formatado.
    */
-  const formatWhatsapp = (value: string) => {
-    const digits = value.replace(/\D/g, "").slice(0, 11);
+  const formatWhatsapp = (digits: string) => {
+    if (digits.length === 0) return "";
     if (digits.length <= 2) return `(${digits}`;
     if (digits.length <= 7) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
-    if (digits.length <= 11)
-      return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
-    return value;
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
   };
 
   /**
@@ -121,7 +122,7 @@ export function FormSection() {
       const payload = {
         "Nome completo ": name,
         "E-mail": email,
-        "WhatsApp": whatsapp,
+        "WhatsApp": formatWhatsapp(whatsapp),
         "Data de entrada de leads": date,
         "Data": date,
         "Hora": time,
@@ -335,8 +336,8 @@ export function FormSection() {
                 type="tel"
                 required
                 placeholder="(11) 99999-9999"
-                value={whatsapp}
-                onChange={(e) => setWhatsapp(formatWhatsapp(e.target.value))}
+                value={formatWhatsapp(whatsapp)}
+                onChange={(e) => setWhatsapp(toDigits(e.target.value))}
                 style={inputStyle}
                 onFocus={(e) => {
                   (e.target as HTMLInputElement).style.borderColor = "rgba(186,255,0,0.6)";
