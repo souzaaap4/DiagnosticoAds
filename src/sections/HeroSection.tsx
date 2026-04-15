@@ -1,114 +1,55 @@
 /**
- * Seção Hero da landing page com CTA principal e benefícios rápidos.
- *
- * @returns JSX.Element
+ * Seção Hero da landing page com proposta principal e CTA.
  */
 export function HeroSection() {
-  /**
-   * Rola suavemente até o formulário de captura.
-   *
-   * @returns void
-   */
   const scrollToForm = () => {
     document.getElementById("formulario")?.scrollIntoView({ behavior: "smooth" });
   };
-  /**
-   * Executa a rolagem ao clicar no CTA.
-   *
-   * @returns void
-   */
-  const handleCtaClick = () => {
-    scrollToForm();
-  };
 
   return (
-    <section
-      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden px-4 sm:px-6 py-16 md:py-20 text-center"
-      style={{
-        background: "var(--lp-bg)",
-      }}
-    >
-      <div className="absolute inset-0 opacity-40" style={{ background: "var(--lp-glow)" }} />
+    <section id="inicio" className="section-wrap section-wrap--hero hero-stage">
+      <div
+        className="section-container motion-reveal hero-panel max-w-[980px]"
+      >
+        <div className="relative z-10 text-center mx-auto motion-reveal delay-1 hero-content">
+          <p className="hero-kicker mb-6 uppercase">
+            Diagnóstico Ads
+          </p>
 
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <p
-          className="mb-6 uppercase tracking-[0.4em]"
-          style={{ color: "var(--lp-muted-2)", fontSize: "0.75rem", letterSpacing: "0.35em" }}
-        >
-          Diagnóstico Ads
-        </p>
+          <h1 className="section-title hero-headline mx-auto">
+            Se o conteúdo do vídeo fez sentido para você,
+            <br className="hero-break" />
+            <span style={{ color: "var(--lp-accent)" }}>o próximo passo é aplicar isso</span>
+            <br className="hero-break" />
+            diretamente em sua conta.
+          </h1>
 
-        <h1
-          className="text-white mx-auto"
-          style={{
-            fontSize: "clamp(2rem, 5vw, 3.5rem)",
-            fontWeight: 800,
-            lineHeight: 1.15,
-            maxWidth: "820px",
-          }}
-        >
-          Se o conteúdo do vídeo fez sentido para você,{" "}
-          <span style={{ color: "var(--lp-accent)" }}>o próximo passo é aplicar isso</span> diretamente em sua conta.
-        </h1>
+          <p className="section-text hero-subtitle mx-auto">
+            Receba um diagnóstico estratégico gratuito para identificar onde seus anúncios no Mercado Livre,
+            Shopee ou Amazon estão limitando sua escala.
+          </p>
 
-        <p
-          className="mt-6 mx-auto"
-          style={{
-            fontSize: "clamp(1rem, 2.2vw, 1.2rem)",
-            color: "var(--lp-muted)",
-            lineHeight: 1.7,
-            maxWidth: "640px",
-          }}
-        >
-          Receba um diagnóstico estratégico gratuito para identificar onde seus anúncios no Mercado Livre, Shopee ou Amazon estão limitando sua escala.
-        </p>
-
-        <div className="relative mt-8 md:mt-10 inline-flex">
-          <div
-            className="absolute -inset-4 rounded-3xl blur-2xl"
-            style={{ background: "rgba(186,255,0,0.22)" }}
-          />
-          <button
-            onClick={handleCtaClick}
-            className="relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl transition-all duration-300 cursor-pointer"
-            style={{
-              background: "var(--lp-accent)",
-              color: "var(--lp-bg)",
-              fontSize: "clamp(1rem, 2vw, 1.125rem)",
-              fontWeight: 700,
-              boxShadow: "0 0 28px rgba(186,255,0,0.35), 0 8px 26px rgba(0,0,0,0.45)",
-            }}
-            // Efeito simples de "lift" no hover para dar destaque ao CTA.
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
-              (e.currentTarget as HTMLButtonElement).style.background = "#C6FF2E";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
-              (e.currentTarget as HTMLButtonElement).style.background = "var(--lp-accent)";
-            }}
-          >
-            <span>Agendar diagnóstico gratuito</span>
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Sinais rápidos de valor/segurança para reduzir fricção */}
-        <div className="mt-8 md:mt-10 flex flex-wrap justify-center gap-5 md:gap-6">
-          {["Gratuito, sem pegadinha", "Análise real por especialistas", "Resultado aplicável imediatamente"].map((item) => (
-            <div key={item} className="flex items-center gap-2">
-              <svg width="14" height="14" fill="var(--lp-accent-2)" viewBox="0 0 20 20" aria-hidden="true">
-                <path
-                  fillRule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clipRule="evenodd"
-                />
+          <div className="mt-7">
+            <button type="button" onClick={scrollToForm} className="lp-btn lp-btn-primary">
+              Agendar diagnóstico gratuito
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
-              <span style={{ fontSize: "0.9rem", color: "var(--lp-muted-2)" }}>{item}</span>
-            </div>
-          ))}
+            </button>
+          </div>
+
+          <div className="hero-proof hero-proof-strip mt-12 md:mt-14 flex flex-wrap justify-center gap-x-6 gap-y-2 motion-reveal delay-2">
+            {[
+              "Gratuito, sem pegadinha",
+              "Análise real por especialistas",
+              "Resultado aplicável imediatamente",
+            ].map((item) => (
+              <div key={item} className="hero-proof-item flex items-center gap-2">
+                <span style={{ color: "var(--lp-accent-2)", fontWeight: 700 }}>✓</span>
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

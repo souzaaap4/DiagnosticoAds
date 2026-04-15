@@ -7,6 +7,7 @@ import { AnalysisSection } from "./sections/AnalysisSection";
 import { AuthoritySection } from "./sections/AuthoritySection";
 import { ScarcitySection } from "./sections/ScarcitySection";
 import { FormSection } from "./sections/FormSection";
+import logoP4 from "./assets/01.png";
 
 /**
  * Componente raiz da aplicação.
@@ -15,35 +16,49 @@ import { FormSection } from "./sections/FormSection";
  */
 export default function App() {
   return (
-    <div
-      className="w-full min-h-screen"
-      style={{ background: "var(--lp-bg)", fontFamily: "'Inter', sans-serif" }}
-    >
-      {/* Bloco 1 – Hero */}
-      <HeroSection />
+    <div className="app-shell w-full min-h-screen">
+      <a className="skip-link" href="#conteudo-principal">
+        Pular para o conteúdo
+      </a>
+      <div className="ambient-glow" aria-hidden="true" />
+      <div className="vector-bg" aria-hidden="true" />
 
-      {/* Bloco 3 – O que será analisado */}
-      <AnalysisSection />
-
-      {/* Bloco 4 – Autoridade */}
-      <AuthoritySection />
-
-      {/* Bloco 5 – Escassez Controlada */}
-      <ScarcitySection />
-
-      {/* Bloco 6 – Formulário Estratégico */}
-      <FormSection />
-
-      {/* Rodapé minimalista */}
-      <footer
-        className="text-center py-6 px-5"
-        style={{ background: "var(--lp-bg)", borderTop: "1px solid rgba(255,255,255,0.04)" }}
-      >
-        <div className="max-w-4xl mx-auto">
-          <p style={{ color: "var(--lp-muted-2)", fontSize: "0.75rem", marginTop: "2px" }}>
-            © {new Date().getFullYear()} Método P4. Todos os direitos reservados.
-          </p>
+      <header className="topbar">
+        <div className="topbar-content">
+          <a className="topbar-brand" href="#inicio" aria-label="Método P4 Ads">
+            <span className="topbar-logo" aria-hidden="true">
+              <img src={logoP4} alt="" className="topbar-logo-img" />
+            </span>
+            <span className="topbar-copy">
+              <strong>Método P4</strong>
+              <small>ADS</small>
+            </span>
+          </a>
+          <a className="mini-cta" href="#formulario">
+            Garantir análise
+          </a>
         </div>
+      </header>
+
+      <main id="conteudo-principal" className="page-main">
+        {/* Bloco 1 – Hero */}
+        <HeroSection />
+
+        {/* Bloco 2 – O que será analisado */}
+        <AnalysisSection />
+
+        {/* Bloco 3 – Autoridade */}
+        <AuthoritySection />
+
+        {/* Bloco 4 – Escassez Controlada */}
+        <ScarcitySection />
+
+        {/* Bloco 5 – Formulário Estratégico */}
+        <FormSection />
+      </main>
+
+      <footer className="footer-bar">
+        <p>© {new Date().getFullYear()} Método P4. Todos os direitos reservados.</p>
       </footer>
     </div>
   );

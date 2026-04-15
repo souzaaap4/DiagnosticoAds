@@ -1,50 +1,36 @@
 /**
- * Seção de vídeo + escassez (disponibilidade de horários).
- * Integra um embed do YouTube com capa estática.
+ * Seção de vídeo e disponibilidade de horários.
  */
 import { useState } from "react";
 import videoCover from "../assets/video-capa.png";
 
-/**
- * Seção com vídeo explicativo e card de escassez controlada.
- *
- * @returns JSX.Element
- */
 export function ScarcitySection() {
-  // ID do vídeo no YouTube (embed).
   const videoId = "ZP3qVjw32es";
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section className="py-16 md:py-20 px-4 sm:px-6" style={{ background: "var(--lp-bg)" }}>
-      <div className="max-w-6xl mx-auto">
-        {/* Introdução */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2
-            className="text-white"
-            style={{ fontSize: "clamp(1.4rem, 3.6vw, 2.1rem)", fontWeight: 800, lineHeight: 1.25 }}
-          >
+    <section className="section-wrap section-wrap--scarcity">
+      <div className="section-container">
+        <div className="text-center max-w-3xl mx-auto mb-10 motion-reveal">
+          <span className="section-tag">Próximo Passo</span>
+          <h2 className="section-title">
             Assista ao vídeo e entenda o próximo passo da sua análise
           </h2>
-          <p
-            className="mt-3"
-            style={{ color: "var(--lp-muted)", fontSize: "clamp(0.95rem, 2vw, 1.1rem)", lineHeight: 1.7 }}
-          >
+          <p className="section-text">
             O vídeo explica como funciona o diagnóstico e, ao lado, você vê a disponibilidade de horários.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 md:gap-10 items-center">
-          {/* Vídeo */}
-          <div className="relative">
-            <div
-              className="relative w-full aspect-video overflow-hidden rounded-3xl"
-              style={{
-                background: "#0F151B",
-                boxShadow: "0 18px 45px rgba(0,0,0,0.35)",
-                border: "1px solid var(--lp-border)",
-              }}
-            >
+        <div className="scarcity-layout grid grid-cols-1 lg:grid-cols-[1.18fr_0.82fr] items-start">
+          <div
+            className="soft-panel motion-reveal delay-1"
+            style={{
+              overflow: "hidden",
+              borderColor: "rgba(149,175,211,0.34)",
+              background: "rgba(7,17,33,0.88)",
+            }}
+          >
+            <div className="relative w-full aspect-video">
               {isPlaying ? (
                 <iframe
                   className="absolute inset-0 w-full h-full"
@@ -58,76 +44,48 @@ export function ScarcitySection() {
                   type="button"
                   onClick={() => setIsPlaying(true)}
                   className="absolute inset-0 w-full h-full"
+                  style={{
+                    border: "none",
+                    padding: 0,
+                    background: "transparent",
+                    cursor: "pointer",
+                  }}
                   aria-label="Assistir ao vídeo"
                 >
-                  <img
-                    src={videoCover}
-                    alt="Capa do vídeo"
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
+                  <img src={videoCover} alt="Capa do vídeo de apresentação" className="w-full h-full object-cover" />
                 </button>
               )}
             </div>
           </div>
 
-          {/* Card menor (escassez) */}
-          <div className="flex justify-center lg:justify-end">
-            <div
-              className="relative overflow-hidden rounded-3xl p-6 md:p-8 text-center w-full max-w-md"
-              style={{
-                background: "linear-gradient(135deg, rgba(22,32,22,0.95) 0%, var(--lp-bg) 50%, rgba(22,32,22,0.95) 100%)",
-                border: "1px solid rgba(86,213,79,0.25)",
-              }}
-            >
-              {/* Brilho superior */}
-              <div
-                className="absolute top-0 left-1/2 -translate-x-1/2 w-52 h-1 rounded-full"
-                style={{ background: "linear-gradient(90deg, transparent, var(--lp-accent-2), transparent)" }}
-              />
-
-              {/* Selo */}
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <span
-                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm"
-                  style={{
-                    background: "rgba(186,255,0,0.12)",
-                    color: "var(--lp-accent)",
-                    border: "1px solid rgba(186,255,0,0.35)",
-                  }}
-                >
-                  <span className="w-2 h-2 rounded-full " style={{ background: "var(--lp-accent)" }} />
-                  Vagas Limitadas
-                </span>
-              </div>
-
-              {/* Título */}
-              <h2
-                className="text-white mb-4"
-                style={{ fontSize: "clamp(1.1rem, 3vw, 1.55rem)", fontWeight: 800, lineHeight: 1.3 }}
-              >
-                Para garantir profundidade na análise, liberamos apenas{" "}
-                <span style={{ color: "var(--lp-accent)" }}>3 horários por dia.</span>
-              </h2>
-
-              {/* Texto principal */}
-              <p
-                style={{
-                  color: "var(--lp-muted)",
-                  fontSize: "clamp(1rem, 2vw, 1.1rem)",
-                  lineHeight: 1.75,
-                  margin: "0 auto 1.5rem",
-                }}
-              >
-                Quando as agendas fecham, novas vagas são abertas conforme disponibilidade. Se você está
-                vendo essa página, ainda há horários disponíveis.
-              </p>
-
-              {/* Nota de rodapé */}
-              <p style={{ color: "var(--lp-accent)", fontSize: "0.8rem" }}>
-                ✦ Análise realizada por especialistas — não é sistema automatizado.
-              </p>
-            </div>
-          </div>
+          <aside
+            className="soft-panel motion-reveal delay-2"
+            style={{
+              padding: "clamp(1.1rem, 3vw, 1.8rem)",
+              borderColor: "rgba(171,255,16,0.3)",
+              background:
+                "radial-gradient(560px circle at 8% 8%, rgba(171,255,16,0.14), transparent 50%), linear-gradient(160deg, rgba(11,26,48,0.95), rgba(8,20,39,0.95))",
+            }}
+          >
+            <span className="section-tag" style={{ marginBottom: "0.9rem" }}>
+              Vagas Limitadas
+            </span>
+            <h3 style={{ margin: 0, fontSize: "clamp(1.18rem, 2.3vw, 1.65rem)", lineHeight: 1.25 }}>
+              Para garantir profundidade na análise, liberamos apenas
+              <span style={{ color: "var(--lp-accent)" }}> 3 horários por dia.</span>
+            </h3>
+            <p className="section-text" style={{ marginBottom: "1rem" }}>
+              Quando as agendas fecham, novas vagas são abertas conforme disponibilidade. Se você está
+              vendo essa página, ainda há horários disponíveis.
+            </p>
+            <p className="scarcity-human-note">
+              <span className="scarcity-human-note-icon" aria-hidden="true">✦</span>
+              <span>
+                Análise realizada por especialistas —
+                <strong> não é sistema automatizado.</strong>
+              </span>
+            </p>
+          </aside>
         </div>
       </div>
     </section>
