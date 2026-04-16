@@ -744,35 +744,28 @@
   background: linear-gradient(180deg, rgba(6, 16, 30, 0) 0%, rgba(6, 16, 30, 0.8) 76%, rgba(6, 16, 30, 0.95) 100%);
 }
 
-.authority-logos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.authority-logo-item {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 92px;
-  min-height: 42px;
-  padding: 0.12rem 0.6rem;
-  border-radius: 999px;
-  border: 1px solid rgba(137, 166, 201, 0.2);
-  background: transparent;
-}
-
-.authority-logo-item img {
-  opacity: 0.98;
-  filter: drop-shadow(0 5px 10px rgba(2, 9, 20, 0.28));
-}
-
 .authority-points {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   gap: 0.62rem;
+}
+
+.marketplace-mention {
+  font-weight: 700;
+}
+
+.marketplace-mention--ml {
+  color: #ffe54f;
+}
+
+.marketplace-mention--shopee {
+  color: #ff6a3a;
+}
+
+.marketplace-mention--amazon {
+  color: #ff9d1a;
 }
 
 .authority-points li {
@@ -929,15 +922,6 @@
   .hero-proof-strip {
     border-radius: 18px;
     row-gap: 0.45rem;
-  }
-
-  .authority-logos {
-    gap: 0.82rem;
-  }
-
-  .authority-logo-item {
-    min-width: 84px;
-    min-height: 40px;
   }
 
   .analysis-card {
@@ -1141,9 +1125,18 @@
   }
 
   .page-main > .section-wrap {
-    min-height: auto;
-    display: block;
+    min-height: max(var(--section-screen-min-height), 560px);
+    display: grid;
+    align-content: center;
+    padding-top: clamp(2rem, 8vw, 2.8rem);
     padding-bottom: clamp(2rem, 8vw, 2.7rem);
+  }
+
+  .page-main > .section-wrap.section-wrap--analysis,
+  .page-main > .section-wrap.section-wrap--authority,
+  .page-main > .section-wrap.section-wrap--scarcity,
+  .page-main > .section-wrap.section-wrap--form {
+    align-content: start;
   }
 
   .page-main > .section-wrap:last-of-type {
@@ -1198,6 +1191,10 @@
   .page-main > .section-wrap + .section-wrap {
     margin-top: clamp(1.15rem, 6.4vw, 1.7rem);
     padding-top: clamp(1.75rem, 8.2vw, 2.3rem);
+  }
+
+  .page-main > .section-wrap {
+    min-height: max(var(--section-screen-min-height), 520px);
   }
 
   .page-main > .section-wrap + .section-wrap::before {

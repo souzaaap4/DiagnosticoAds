@@ -2,15 +2,6 @@
  * Seção de autoridade com especialistas e canais atendidos.
  */
 import especialistasImg from "../assets/especialistas.png";
-import mercadoLivreLogo from "../assets/logos/mercado-livre.svg";
-import shopeeLogo from "../assets/logos/shopee.png";
-import amazonLogo from "../assets/logos/amazon.png";
-
-const marketplaces = [
-  { name: "Mercado Livre", logo: mercadoLivreLogo },
-  { name: "Shopee", logo: shopeeLogo },
-  { name: "Amazon", logo: amazonLogo },
-];
 
 const authorityPoints = [
   "Diagnóstico de estrutura, verba e rentabilidade por canal.",
@@ -44,24 +35,16 @@ export function AuthoritySection() {
           <span className="section-tag">Especialistas</span>
           <h2 className="section-title">
             Nossos especialistas analisam contas
-            <span style={{ color: "var(--lp-accent)" }}> diariamente</span> dentro de:
+            <span style={{ color: "var(--lp-accent)" }}> diariamente.</span>
           </h2>
           <p className="section-text">
             Entregamos uma leitura completa da sua operação com foco em performance: identificamos
-            gargalos, oportunidades de escala e um plano de ação claro para aplicar imediatamente.
+            gargalos, oportunidades de escala e um plano de ação claro para aplicar imediatamente
+            em contas de{" "}
+            <span className="marketplace-mention marketplace-mention--ml">Mercado Livre</span>,{" "}
+            <span className="marketplace-mention marketplace-mention--shopee">Shopee</span> e{" "}
+            <span className="marketplace-mention marketplace-mention--amazon">Amazon</span>.
           </p>
-
-          <div className="authority-logos mt-5 motion-reveal delay-2" aria-label="Canais analisados">
-            {marketplaces.map((marketplace) => (
-              <span
-                key={marketplace.name}
-                className="authority-logo-item"
-                title={marketplace.name}
-              >
-                <img src={marketplace.logo} alt={marketplace.name} style={{ height: "30px", width: "auto" }} />
-              </span>
-            ))}
-          </div>
 
           <ul className="authority-points mt-6">
             {authorityPoints.map((point) => (
