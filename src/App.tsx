@@ -35,7 +35,10 @@ export default function App() {
             </span>
           </a>
           <a className="mini-cta" href="#formulario">
-            Garantir análise
+            <span className="mini-cta-full">Garantir análise</span>
+            <span className="mini-cta-short" aria-hidden="true">
+              Análise
+            </span>
           </a>
         </div>
       </header>

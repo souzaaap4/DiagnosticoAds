@@ -385,7 +385,7 @@ export function FormSection() {
                           }}
                         />
                       )}
-                      <span style={{ fontSize: "0.93rem", fontWeight: isSelected ? 700 : 600 }}>
+                      <span className="market-button-label" style={{ fontWeight: isSelected ? 700 : 600 }}>
                         {marketplace.label}
                       </span>
                     </button>
