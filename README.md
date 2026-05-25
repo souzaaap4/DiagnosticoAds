@@ -1,131 +1,97 @@
-# DiagnosticoAds
+# LP DiagnósticoAds — Método P4
 
-> Landing page privada para captação e qualificação de leads de diagnóstico estratégico em marketplaces.
+> Landing page orgânica para captação de leads do diagnóstico gratuito de Ads em marketplaces.
 
-![Status](https://img.shields.io/badge/status-projeto%20privado-8b0000)
-![Frontend](https://img.shields.io/badge/frontend-React%2018%20%2B%20Vite%206-1f6feb)
+![Status](https://img.shields.io/badge/status-ativo-22c55e)
+![Frontend](https://img.shields.io/badge/frontend-HTML%20%2F%20CSS%20%2F%20JS-1f6feb)
+![Build](https://img.shields.io/badge/build-Vite%206-646cff)
 ![Automação](https://img.shields.io/badge/automacao-n8n%20Webhook-0f766e)
 ![Deploy](https://img.shields.io/badge/deploy-Vercel%20%2F%20HostGator-7c3aed)
 
-README de apresentação para GitHub.  
-A documentação técnica oficial e completa permanece em [docs/DOCUMENTACAO_OFICIAL.md](./docs/DOCUMENTACAO_OFICIAL.md).
+---
 
-## Visão do Projeto
-O **DiagnosticoAds** foi desenhado para transformar tráfego em leads qualificados, conectando aquisição, coleta de dados e agendamento comercial em um único fluxo.
+## Sobre
 
-### O que o sistema resolve
-- Evita perda de lead entre formulário e agendamento.
-- Centraliza captação com dados de contexto comercial.
-- Preserva origem de tráfego para análise de performance.
-- Entrega o lead para automação operacional (n8n) com baixa fricção.
+Página de captura para o funil `diagnostico-organico` do Método P4. Ao preencher o formulário, o lead é enviado via webhook para o N8N, que registra os dados em 3 abas da planilha Google Sheets (Organico, Banco de Dados e CRM Geral) e redireciona para o link de agendamento.
 
-## O Que Foi Desenvolvido
-### 1. Captação e Tracking 
-- Captura de origem (`channel`, `source`, `medium`, `campaign`) via script de bootstrap.
-- Persistência de tracking no navegador para reaproveitamento no submit.
+**URL em produção:** `https://diagnosticoads.metodop4.com.br`
 
-### 2. Formulário de Qualificação
-- Captura de nome, e-mail, WhatsApp, faixa de investimento e canais de venda.
-- Validação local de consistência de telefone.
-- Interface responsiva para mobile e desktop.
+---
 
-### 3. Integração com Automação
-- Envio de payload para webhook n8n.
-- Estratégia resiliente de envio: `sendBeacon` com fallback `fetch keepalive`.
-- Redirecionamento para agenda após tentativa de envio.
+## Estrutura do projeto
 
-### 4. Jornada de Conversão
-- Sequência de seções orientada à tomada de decisão.
-- CTA principal para agendamento imediato.
-- Blocos de autoridade, análise e escassez para qualificação de interesse.
-
-## Stack Técnica
-- **Frontend:** React 18, TypeScript, Vite 6
-- **UI/Estilos:** CSS custom, Tailwind CSS v4, tw-animate-css
-- **Integração:** Webhook n8n + redirecionamento Google Calendar
-- **Deploy:** Vercel + build estático para HostGator/cPanel
-
-## Arquitetura (Resumo)
-| Camada | Responsabilidade |
-| --- | --- |
-| `src/sections` | Seções funcionais da landing (narrativa e conversão) |
-| `src/lib` | Regras utilitárias (tracking e WhatsApp) |
-| `src/config` | Configuração de runtime por variáveis de ambiente |
-| `src/styles` | Tema, tipografia e responsividade |
-| `public` | Scripts/arquivos estáticos de apoio ao deploy |
-
-## Funcionamento do Sistema
-1. Usuário acessa a LP.
-2. Script de tracking inicializa e persiste origem da sessão.
-3. Usuário preenche formulário de qualificação.
-4. Aplicação monta payload com dados de contato + tracking.
-5. Lead é enviado ao webhook n8n.
-6. Usuário é redirecionado para agendamento.
-
-```mermaid
-flowchart LR
-    A[Acesso à LP] --> B[Tracking da origem]
-    B --> C[Preenchimento do formulário]
-    C --> D[Montagem do payload]
-    D --> E[Envio para webhook n8n]
-    D --> F[Redirecionamento para agenda]
-    E --> G[Processamento comercial no destino]
+```
+LP-diagnostico/
+├── ads.html                  ← página principal (entry do Vite)
+├── vite.config.ts
+├── package.json
+├── vercel.json               ← config deploy Vercel
+├── assets/                   ← imagens usadas na página
+│   ├── 01.png                ← logo nav
+│   ├── 03.png                ← logo footer
+│   └── video-thumb-diagnostico.png
+├── fonts/static/             ← fonte Sora (6 pesos)
+├── public/                   ← copiado direto para dist/
+│   ├── robots.txt
+│   └── sitemap.xml
+├── dist/                     ← build gerado (não versionar)
+├── diagnostico-organico-tay/ ← pasta pronta para upload no Hostgator
+└── docs/
+    ├── relatorio.md                    ← log de todas as alterações
+    ├── PADRAO-AUTOMACAO-TRACKING.md    ← template padrão de automação
+    ├── PADRAO-SEO.md                   ← template padrão de SEO
+    ├── n8n-diagnostico-organico.json   ← workflow N8N (importar via UI)
+    ├── setup-organico.gs               ← Apps Script — aba Organico
+    └── setup-banco-de-dados.gs         ← Apps Script — aba Banco de Dados
 ```
 
-## Diferenciais de Engenharia
-- Captura de tracking antes do bootstrap do React.
-- Envio resiliente para reduzir perda de lead na navegação.
-- Estrutura enxuta e modular para manutenção rápida.
-- Build preparado para Vercel e publicação estática em HostGator.
+---
 
-## Estrutura do Projeto
-```text
-.
-├─ src/
-│  ├─ assets/
-│  ├─ config/
-│  ├─ lib/
-│  ├─ sections/
-│  ├─ styles/
-│  ├─ App.tsx
-│  └─ main.tsx
-├─ public/
-│  ├─ 01.png
-│  ├─ tracking.js
-│  └─ htaccess-hostgator.txt
-├─ docs/
-│  ├─ DOCUMENTACAO_OFICIAL.md
-│  ├─ TECHNICAL_GUIDE.md
-│  ├─ AUTOMACAO_N8N.md
-│  ├─ ENGINEERING_REVIEW.md
-│  └─ DIAGRAMS.md
-├─ ads.html
-├─ index.html
-├─ vite.config.ts
-├─ vercel.json
-└─ .env.example
-```
+## Automação
 
-## Execução Local
+| Item | Valor |
+|---|---|
+| Webhook | `https://n8n.srv1095468.hstgr.cloud/webhook/Diagnostico-organico` |
+| Funil | `diagnostico-organico` |
+| Spreadsheet ID | `17uXnW7B3OoyGRgnJUtlV59S_JvaxyZe7A9R8PAJ900E` |
+| Redirecionamento | `https://calendar.app.google/zaNXcV4By3HUQuc88` |
+
+**Planilhas gravadas em paralelo:**
+- **Organico** — 35 colunas, automação da página orgânica
+- **Banco de Dados** — 17 colunas, armazenamento bruto de todos os leads
+- **CRM Geral** — visão de vendas, com coluna `Pergunta adicional` combinada
+
+---
+
+## Desenvolvimento
+
 ```bash
 npm install
-npm run dev
+npm run dev      # http://localhost:5173
+npm run build    # gera dist/
 ```
 
-## Build de Produção
-```bash
-npm run build
-```
-
-## Variáveis de Ambiente (Essencial)
-- `VITE_CALENDAR_URL`
-- `VITE_LEAD_WEBHOOK_URL`
-
-Base de configuração: [.env.example](./.env.example)
+---
 
 ## Deploy
-- **Vercel:** integração com repositório para deploy contínuo.
-- **HostGator/cPanel:** publicação manual dos arquivos de build estático.
 
-## Licença
-A licença **permanece inalterada** e segue os termos proprietários definidos em [LICENSE](./LICENSE).
+### Vercel
+Push para `main` → deploy automático via `vercel.json`.
+
+### Hostgator
+1. Rodar `npm run build`
+2. Fazer upload da pasta `diagnostico-organico-tay/` para `public_html/` via FTP ou cPanel
+3. O `.htaccess` já está configurado para `/diagnostico-organico-tay/`
+
+---
+
+## Documentação
+
+| Arquivo | Descrição |
+|---|---|
+| `docs/relatorio.md` | Log cronológico de todas as alterações |
+| `docs/PADRAO-AUTOMACAO-TRACKING.md` | Template reutilizável de automação para novas páginas |
+| `docs/PADRAO-SEO.md` | Template reutilizável de SEO para novas páginas |
+| `docs/n8n-diagnostico-organico.json` | Workflow N8N — importar em Import Workflow |
+| `docs/setup-organico.gs` | Apps Script para criar/recriar aba Organico |
+| `docs/setup-banco-de-dados.gs` | Apps Script para criar/recriar aba Banco de Dados |

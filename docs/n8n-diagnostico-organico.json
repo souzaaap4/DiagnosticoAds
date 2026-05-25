@@ -1,0 +1,236 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "DiagnosticoAds",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [-800, 400],
+      "id": "6a176a01-ca50-4df9-988a-981aab0eb470",
+      "name": "Webhook",
+      "webhookId": "709bea99-4f21-43a3-91b1-6d858878b46b",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.body ?? $json;\nlet data = raw;\n\nif (typeof data === 'string') {\n  try { data = JSON.parse(data); } catch { data = {}; }\n}\nif (typeof data !== 'object' || data === null || Array.isArray(data)) {\n  data = {};\n}\n\nconst pick = (obj, keys, fallback = '') => {\n  for (const key of keys) {\n    const val = obj[key];\n    if (val !== undefined && val !== null && String(val).trim() !== '') {\n      return typeof val === 'string' ? val.trim() : String(val);\n    }\n  }\n  return fallback;\n};\n\nconst nome      = pick(data, ['Nome completo', 'nome', 'name']);\nconst email     = pick(data, ['E-mail', 'Email', 'email']);\nconst whatsapp  = pick(data, ['WhatsApp', 'Whatsapp', 'whatsapp']);\nconst confirmar = pick(data, ['Confirmar WhatsApp', 'Confirmar whatsapp', 'confirmar_whatsapp', 'whatsapp_confirmacao']);\nconst investimento = pick(data, [\n  'Quanto você investe em publicidade nos marketplaces hoje?',\n  'investimento', 'investimento_mensal', 'invest'\n]);\n\nconst canaisRaw = data['Em quais canais'] || data['canais_marketplace'] || data.canais || '';\nconst canais = Array.isArray(canaisRaw) ? canaisRaw.join(', ') : String(canaisRaw || '');\n\n// Campo combinado para CRM Geral\nconst perguntaAdicional = [\n  investimento ? `Investimento: ${investimento}` : '',\n  canais       ? `Canais: ${canais}` : ''\n].filter(Boolean).join(' | ');\n\nconst now = new Date();\nconst pad = n => String(n).padStart(2, '0');\nconst dateBR = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()}`;\nconst hora   = `${pad(now.getHours())}:${pad(now.getMinutes())}`;\n\nconst channel  = pick(data, ['channel', 'canal'], 'direto');\nconst source   = pick(data, ['source', 'utm_source', 'origem'], 'direto');\nconst medium   = pick(data, ['medium', 'utm_medium'], 'none');\nconst campaign = pick(data, ['campaign', 'utm_campaign'], 'none');\nconst content  = pick(data, ['utm_content', 'content'], 'none');\nconst referrer = pick(data, ['referrer', 'ref'], '');\nconst pageUrl  = pick(data, ['page_url', 'url'], '');\nconst timestamp = pick(data, ['timestamp', 'ts'], new Date().toISOString());\nconst finalChannel = channel === 'direto' && source !== 'direto' ? source : channel;\n\nreturn [{ json: {\n  'Data de entrada de leads': pick(data, ['Data de entrada de leads', 'Data'], dateBR),\n  'Hora':               pick(data, ['Hora'], hora),\n  'Nome completo':      nome,\n  'E-mail':             email,\n  'WhatsApp':           whatsapp,\n  'Confirmar WhatsApp': confirmar,\n  'Investimento em Ads': investimento,\n  'Canais':             canais,\n  'Pergunta adicional': perguntaAdicional,\n  'Funil':              'diagnostico-organico',\n  'Channel':            finalChannel,\n  'Source':             source,\n  'Medium':             medium,\n  'Campaign':           campaign,\n  'Content':            content,\n  'Referrer':           referrer,\n  'Page URL':           pageUrl,\n  'Timestamp':          timestamp,\n} }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-560, 400],
+      "id": "de18b31c-410d-472d-8f6c-80da0fe6b7d1",
+      "name": "Parse Body",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "17uXnW7B3OoyGRgnJUtlV59S_JvaxyZe7A9R8PAJ900E",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Organico",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Entrada leads":        "={{ $json['Data de entrada de leads'] }}",
+            "Nome completo":        "={{ $json['Nome completo'] }}",
+            "Qual seu e-mail?":     "={{ $json['E-mail'] }}",
+            "Qual o seu WhatsApp?": "={{ $json.WhatsApp }}",
+            "Confirme seu WhatsApp":"={{ $json['Confirmar WhatsApp'] }}",
+            "Funil":                "={{ $json.Funil }}",
+            "Pergunta adicional":   "={{ $json['Pergunta adicional'] }}",
+            "channel":              "={{ $json.Channel }}",
+            "utm_source":           "={{ $json.Source }}",
+            "utm_medium":           "={{ $json.Medium }}",
+            "utm_campaign":         "={{ $json.Campaign }}",
+            "utm_content":          "={{ $json.Content }}",
+            "timestamp":            "={{ $json.Timestamp }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            { "id": "Entrada leads",        "displayName": "Entrada leads",        "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Nome completo",        "displayName": "Nome completo",        "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Qual seu e-mail?",     "displayName": "Qual seu e-mail?",     "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Qual o seu WhatsApp?", "displayName": "Qual o seu WhatsApp?", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Confirme seu WhatsApp","displayName": "Confirme seu WhatsApp","required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "Funil",                "displayName": "Funil",                "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Pergunta adicional",   "displayName": "Pergunta adicional",   "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "channel",              "displayName": "channel",              "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "utm_source",           "displayName": "utm_source",           "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "utm_medium",           "displayName": "utm_medium",           "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "utm_campaign",         "displayName": "utm_campaign",         "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "utm_content",          "displayName": "utm_content",          "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "timestamp",            "displayName": "timestamp",            "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [-280, 160],
+      "id": "sheet-organico-001",
+      "name": "Sheet: Organico",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": { "id": "jFHr4eg26MHLFHHa", "name": "Cockpit" }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "17uXnW7B3OoyGRgnJUtlV59S_JvaxyZe7A9R8PAJ900E",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Banco de Dados",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Data de entrada de leads": "={{ $json['Data de entrada de leads'] }}",
+            "Hora":               "={{ $json.Hora }}",
+            "Nome completo":      "={{ $json['Nome completo'] }}",
+            "E-mail":             "={{ $json['E-mail'] }}",
+            "WhatsApp":           "={{ $json.WhatsApp }}",
+            "Confirmar WhatsApp": "={{ $json['Confirmar WhatsApp'] }}",
+            "Investimento em Ads": "={{ $json['Investimento em Ads'] }}",
+            "Canais":             "={{ $json.Canais }}",
+            "Funil":              "={{ $json.Funil }}",
+            "Channel":            "={{ $json.Channel }}",
+            "Source":             "={{ $json.Source }}",
+            "Medium":             "={{ $json.Medium }}",
+            "Campaign":           "={{ $json.Campaign }}",
+            "Content":            "={{ $json.Content }}",
+            "Referrer":           "={{ $json.Referrer }}",
+            "Page URL":           "={{ $json['Page URL'] }}",
+            "Timestamp":          "={{ $json.Timestamp }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            { "id": "Data de entrada de leads", "displayName": "Data de entrada de leads", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Hora",               "displayName": "Hora",               "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "Nome completo",      "displayName": "Nome completo",      "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "E-mail",             "displayName": "E-mail",             "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "WhatsApp",           "displayName": "WhatsApp",           "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Confirmar WhatsApp", "displayName": "Confirmar WhatsApp", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "Investimento em Ads","displayName": "Investimento em Ads","required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "Canais",             "displayName": "Canais",             "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "Funil",              "displayName": "Funil",              "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Channel",            "displayName": "Channel",            "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Source",             "displayName": "Source",             "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Medium",             "displayName": "Medium",             "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Campaign",           "displayName": "Campaign",           "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Content",            "displayName": "Content",            "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "Referrer",           "displayName": "Referrer",           "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "Page URL",           "displayName": "Page URL",           "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "Timestamp",          "displayName": "Timestamp",          "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [-280, 400],
+      "id": "sheet-banco-002",
+      "name": "Sheet: Banco de Dados",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": { "id": "jFHr4eg26MHLFHHa", "name": "Cockpit" }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "17uXnW7B3OoyGRgnJUtlV59S_JvaxyZe7A9R8PAJ900E",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "CRM Geral",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Data de entrada de leads": "={{ $json['Data de entrada de leads'] }}",
+            "Hora":               "={{ $json.Hora }}",
+            "Nome completo":      "={{ $json['Nome completo'] }}",
+            "E-mail":             "={{ $json['E-mail'] }}",
+            "WhatsApp":           "={{ $json.WhatsApp }}",
+            "Confirmar WhatsApp": "={{ $json['Confirmar WhatsApp'] }}",
+            "Pergunta adicional": "={{ $json['Pergunta adicional'] }}",
+            "Funil":              "={{ $json.Funil }}",
+            "Channel":            "={{ $json.Channel }}",
+            "Source":             "={{ $json.Source }}",
+            "Medium":             "={{ $json.Medium }}",
+            "Campaign":           "={{ $json.Campaign }}",
+            "Timestamp":          "={{ $json.Timestamp }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            { "id": "Data de entrada de leads", "displayName": "Data de entrada de leads", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Hora",               "displayName": "Hora",               "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "Nome completo",      "displayName": "Nome completo",      "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "E-mail",             "displayName": "E-mail",             "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "WhatsApp",           "displayName": "WhatsApp",           "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Confirmar WhatsApp", "displayName": "Confirmar WhatsApp", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "Pergunta adicional", "displayName": "Pergunta adicional", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false },
+            { "id": "Funil",              "displayName": "Funil",              "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Channel",            "displayName": "Channel",            "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Source",             "displayName": "Source",             "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Medium",             "displayName": "Medium",             "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Campaign",           "displayName": "Campaign",           "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Timestamp",          "displayName": "Timestamp",          "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": false }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [-280, 640],
+      "id": "sheet-crm-003",
+      "name": "Sheet: CRM Geral",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": { "id": "jFHr4eg26MHLFHHa", "name": "Cockpit" }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Parse Body", "type": "main", "index": 0 }]]
+    },
+    "Parse Body": {
+      "main": [[
+        { "node": "Sheet: Organico",       "type": "main", "index": 0 },
+        { "node": "Sheet: Banco de Dados", "type": "main", "index": 0 },
+        { "node": "Sheet: CRM Geral",      "type": "main", "index": 0 }
+      ]]
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a2041f8092fce2115726eddb1e426926a5611d3381df73a6f0a4d6fdebec6e0b"
+  }
+}

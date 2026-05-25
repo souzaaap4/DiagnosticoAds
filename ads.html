@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DiagnósticoAds</title>
-  <meta name="description" content="Diagnóstico estratégico gratuito para otimizar anúncios em marketplaces e escalar performance.">
+  <title>Diagnóstico Gratuito de Ads — Mercado Livre, Shopee e Amazon | Método P4</title>
+  <meta name="description" content="Receba um diagnóstico gratuito das suas campanhas em marketplaces. Dois estrategistas analisam sua conta ao vivo em 1 hora e entregam um plano de ação prático.">
   <link rel="icon" type="image/png" href="assets/01.png">
   <link rel="apple-touch-icon" href="assets/01.png">
 
-  <link rel="canonical" href="https://metodop4.com.br/diagnostico-ads/">
+  <link rel="canonical" href="https://diagnosticoads.metodop4.com.br">
 
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://metodop4.com.br/diagnostico-ads/">
-  <meta property="og:title"       content="DiagnósticoAds">
-  <meta property="og:description" content="Diagnóstico estratégico gratuito para otimizar anúncios em marketplaces e escalar performance.">
-  <meta property="og:image"       content="https://metodop4.com.br/diagnostico-ads/assets/og-image.png">
+  <meta property="og:url"         content="https://diagnosticoads.metodop4.com.br">
+  <meta property="og:title"       content="Diagnóstico Gratuito de Ads — Mercado Livre, Shopee e Amazon | Método P4">
+  <meta property="og:description" content="Receba um diagnóstico gratuito das suas campanhas em marketplaces. Dois estrategistas analisam sua conta ao vivo em 1 hora e entregam um plano de ação prático.">
+  <meta property="og:image"       content="https://diagnosticoads.metodop4.com.br/assets/video-thumb-diagnostico.png">
   <meta property="og:image:width"  content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale"      content="pt_BR">
   <meta property="og:site_name"   content="Método P4">
 
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="DiagnósticoAds">
-  <meta name="twitter:description" content="Diagnóstico estratégico gratuito para otimizar anúncios em marketplaces e escalar performance.">
-  <meta name="twitter:image"       content="https://metodop4.com.br/diagnostico-ads/assets/og-image.png">
+  <meta name="twitter:title"       content="Diagnóstico Gratuito de Ads — Mercado Livre, Shopee e Amazon | Método P4">
+  <meta name="twitter:description" content="Receba um diagnóstico gratuito das suas campanhas em marketplaces. Dois estrategistas analisam sua conta ao vivo em 1 hora e entregam um plano de ação prático.">
+  <meta name="twitter:image"       content="https://diagnosticoads.metodop4.com.br/assets/video-thumb-diagnostico.png">
 
   <meta name="robots" content="index, follow">
   <meta name="author" content="Método P4">
@@ -52,7 +52,7 @@
       "availability": "https://schema.org/LimitedAvailability",
       "category": "Free"
     },
-    "url": "https://metodop4.com.br/diagnostico-ads/"
+    "url": "https://diagnosticoads.metodop4.com.br"
   }
   </script>
 
@@ -69,12 +69,12 @@
       {
         "@type": "Question",
         "name": "Quanto tempo dura o diagnóstico?",
-        "acceptedAnswer": { "@type": "Answer", "text": "A análise ao vivo dura 1 hora. Nesse tempo, dois estrategistas especialistas revisam suas campanhas e entregam um relatório prático." }
+        "acceptedAnswer": { "@type": "Answer", "text": "A análise ao vivo dura 1 hora. Nesse tempo, nosso time de especialistas revisa suas campanhas e entrega um relatório prático." }
       },
       {
         "@type": "Question",
         "name": "Quem faz o diagnóstico?",
-        "acceptedAnswer": { "@type": "Answer", "text": "O diagnóstico é realizado por 2 estrategistas de marketplace especializados em Mercado Livre, Shopee e Amazon." }
+        "acceptedAnswer": { "@type": "Answer", "text": "O diagnóstico é realizado pelo time de especialistas de marketplace do Método P4, especializados em Mercado Livre, Shopee e Amazon." }
       },
       {
         "@type": "Question",
@@ -102,7 +102,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="preload" href="fonts/static/Sora-Bold.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="fonts/static/Sora-Regular.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="preload" as="image" href="assets/ChatGPT%20Image%2022%20de%20mai.%20de%202026%2C%2009_03_10.png">
+  <link rel="preload" as="image" href="assets/video-thumb-diagnostico.png">
 
   <style>
     :root {
@@ -172,16 +172,21 @@
     .nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       padding: 18px 0;
-      transition: background .3s, border-color .3s, padding .3s;
+      background: transparent;
       border-bottom: 1px solid transparent;
+      transition: background .3s, border-color .3s, padding .3s, box-shadow .3s;
     }
     .nav.solid {
-      background: linear-gradient(180deg, rgba(11,20,34,.95) 0%, rgba(11,20,34,.87) 100%);
+      background: linear-gradient(180deg, rgba(11,20,34,.97) 0%, rgba(11,20,34,.92) 100%);
       backdrop-filter: blur(16px);
       border-color: rgba(255,255,255,.09);
       padding: 12px 0;
       box-shadow: 0 8px 24px rgba(0,0,0,.28);
     }
+    /* elementos do nav ficam escuros no topo (hero claro) */
+    .nav:not(.solid) .nav-links a { color: rgba(15,27,42,.72); }
+    .nav:not(.solid) .nav-links a:hover { color: #2a9e28; }
+    .nav:not(.solid) .brand-icon { filter: none; }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; }
     .nav-logo { display: inline-flex; align-items: center; }
     .brand-icon {
@@ -209,53 +214,72 @@
       transition: transform .2s, filter .2s;
     }
     .nav-cta:hover { transform: translateY(-1px); filter: brightness(1.03); }
-    .nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 4px; }
-    .nav-burger span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; }
-
-    .mobile-nav { display: none; position: fixed; inset: 0; z-index: 190; background: radial-gradient(1000px 600px at 100% 0%, rgba(88,222,86,.08) 0%, transparent 48%), var(--dark2); flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a { font-size: 1.3rem; font-weight: 700; color: var(--white); }
-    .mobile-nav .btn-green { font-size: 1rem; padding: 14px 36px; }
-    .mobile-x { position: absolute; top: 18px; right: 22px; background: none; border: none; color: var(--white); font-size: 1.5rem; }
 
     /* ════════════════════════
        HERO
     ════════════════════════ */
     .hero {
-      background-color: var(--dark);
-      background-image:
-        linear-gradient(94deg, rgba(7,14,26,.88) 0%, rgba(7,14,26,.78) 38%, rgba(7,14,26,.54) 62%, rgba(7,14,26,.22) 100%),
-        url('assets/ChatGPT%20Image%2022%20de%20mai.%20de%202026%2C%2009_03_10.png');
-      background-size: cover;
-      background-position: 82% center;
-      background-repeat: no-repeat;
+      background: linear-gradient(160deg, #e8ede8 0%, #e0e8e0 60%, #d8e3d8 100%);
       min-height: 100vh;
       display: flex; align-items: center;
       padding: 124px 0 92px;
       position: relative; overflow: hidden;
+      border-bottom: 1px solid rgba(42,158,40,.12);
     }
     .hero .wrap {
       width: 100%;
       max-width: none;
       padding: 0 clamp(20px, 7vw, 112px);
     }
+    /* glow central — halo suave atrás do título */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 48%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 780px; height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(88,222,86,.13) 0%, rgba(88,222,86,0) 68%);
+      pointer-events: none;
+      filter: blur(48px);
+    }
+    /* acento canto inferior direito */
     .hero::after {
       content: '';
       position: absolute;
-      inset: auto -120px -160px auto;
-      width: 500px; height: 500px;
+      inset: auto -80px -100px auto;
+      width: 420px; height: 420px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(88,222,86,.07) 0%, rgba(88,222,86,0) 72%);
+      background: radial-gradient(circle, rgba(42,158,40,.09) 0%, rgba(42,158,40,0) 70%);
       pointer-events: none;
-      filter: blur(10px);
+      filter: blur(32px);
+    }
+
+    /* acentos geométricos decorativos */
+    .hero-deco {
+      position: absolute; border-radius: 50%; pointer-events: none;
+    }
+    .hero-deco--tl {
+      top: -120px; left: -120px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(42,158,40,.07) 0%, transparent 70%);
+      filter: blur(24px);
+    }
+    .hero-deco--bl {
+      bottom: -60px; left: 8%;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, rgba(42,158,40,.06) 0%, transparent 70%);
+      filter: blur(18px);
     }
 
     .hero-grid {
       display: grid; grid-template-columns: 1fr;
       gap: 48px; align-items: center;
       position: relative; z-index: 1;
-      justify-items: start;
+      justify-items: center;
+      text-align: center;
       max-width: 720px;
+      margin: 0 auto;
     }
     .hero .reveal {
       max-width: 760px;
@@ -270,27 +294,31 @@
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
       font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--white); margin-bottom: 20px;
+      color: #0f1b2a;
+      background: #f0f9f0;
+      border: 1.5px solid rgba(88,222,86,.45);
+      padding: 6px 16px 6px 12px;
+      border-radius: 100px;
+      margin-bottom: 20px;
     }
-    .hero-badge strong { color: var(--green); }
-    .hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: blink 1.5s infinite; }
+    .hero-badge strong { color: #2a9e28; }
+    .hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; animation: blink 1.5s infinite; }
     @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:.3; } }
 
     .hero h1 {
       font-size: clamp(2.1rem, 4.3vw, 3.6rem);
       font-weight: 800; line-height: 1.08;
       letter-spacing: -.02em; text-transform: uppercase;
-      color: var(--white); margin-bottom: 24px;
-      max-width: 18ch;
-      margin-left: auto;
-      margin-right: auto;
+      color: var(--text-d); margin-bottom: 24px;
+      width: 100%;
       text-align: center;
     }
-    .hero h1 .gn { color: var(--green); }
+    .hero h1 .gn { color: #2a9e28; }
 
     .hero-sub {
-      font-size: 1rem; font-weight: 300; line-height: 1.8;
-      color: rgba(231,235,241,.84); max-width: 600px; margin-bottom: 26px;
+      font-size: 1rem; font-weight: 400; line-height: 1.8;
+      color: var(--text-g); max-width: 600px; margin-bottom: 26px;
+      text-align: center; margin-left: auto; margin-right: auto;
     }
 
     .hero-pills {
@@ -298,24 +326,26 @@
     }
     .hero-pill {
       display: inline-flex; align-items: center; gap: 7px;
-      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+      background: #ffffff; border: 1px solid rgba(42,158,40,.2);
       border-radius: 100px; padding: 8px 14px;
-      font-size: .74rem; font-weight: 600; color: rgba(231,235,241,.9);
+      font-size: .74rem; font-weight: 600; color: var(--text-d);
+      box-shadow: 0 2px 8px rgba(42,158,40,.07);
     }
-    .hero-pill i { color: var(--green); font-size: .72rem; }
+    .hero-pill i { color: #2a9e28; font-size: .72rem; }
 
     .hero-cta-group {
-      display: inline-flex;
+      display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
       gap: 14px;
+      width: 100%;
     }
     .hero-cta-group .btn-green { margin: 0; }
     .hero-cta-hint {
-      font-size: .73rem; color: rgba(231,235,241,.5);
+      font-size: .73rem; color: var(--text-g);
       display: flex; align-items: center; gap: 6px;
     }
-    .hero-cta-hint i { color: var(--green); font-size: .66rem; }
+    .hero-cta-hint i { color: #2a9e28; font-size: .66rem; }
 
     /* ════════════════════════
        URGÊNCIA (BARRA)
@@ -591,12 +621,6 @@
        ESPECIALISTAS
     ════════════════════════ */
     .especialistas-sec {
-      background-image:
-        linear-gradient(96deg, rgba(7,14,26,.82) 0%, rgba(7,14,26,.68) 38%, rgba(7,14,26,.28) 62%, rgba(7,14,26,.06) 100%),
-        url('assets/ChatGPT%20Image%2022%20de%20mai.%20de%202026%2C%2009_04_39.png');
-      background-size: cover;
-      background-position: 65% top;
-      background-repeat: no-repeat;
       background-color: var(--dark);
       padding: 120px 0 120px;
       min-height: auto;
@@ -923,10 +947,10 @@
 
     @media (max-width: 900px) {
       :root { --section-uniform-pad: 88px; --section-uniform-min: 0px; }
-      .hero-grid { grid-template-columns: 1fr; text-align: left; justify-items: start; }
+      .hero-grid { grid-template-columns: 1fr; justify-items: center; }
       .hero { padding: 110px 0 78px; background-position: 78% center; }
       .hero .wrap { padding: 0 24px; }
-      .hero h1 { max-width: 18ch; }
+      .hero h1 { text-align: center; }
       .hero-sub { margin: 0 0 24px; }
 
       .benefit-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -947,15 +971,15 @@
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .nav-cta { display: none; }
-      .nav-burger { display: flex; }
       .wrap { padding: 0 20px; }
       .btn-green-lg { width: 100%; }
       .hero .btn-green-lg { width: auto; }
 
-      .hero { background-position: 74% center; }
       .hero h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); }
       .hero-sub { font-size: .93rem; max-width: 100%; }
-      .hero-pills { gap: 8px; }
+      .hero-pills { gap: 8px; justify-content: center; }
+      .hero-cta-group { align-items: center; }
+      .hero-cta-hint { justify-content: center; }
 
 
       .benefit-grid { grid-template-columns: 1fr; gap: 12px; }
@@ -992,12 +1016,14 @@
       :root { --section-uniform-pad: 72px; --section-uniform-min: 0px; }
       .wrap { padding: 0 16px; }
 
-      .hero { padding: 94px 0 60px; background-position: 70% center; }
+      .hero { padding: 94px 0 60px; }
       .hero .wrap { padding: 0 18px; }
-      .hero h1 { font-size: clamp(1.65rem, 6vw, 2rem); max-width: 18ch; }
+      .hero h1 { font-size: clamp(1.65rem, 6vw, 2rem); }
       .hero-sub { font-size: .87rem; line-height: 1.72; }
       .hero-badge { font-size: .65rem; }
-      .hero-pills { flex-direction: column; gap: 6px; }
+      .hero-cta-group { align-items: stretch; }
+      .hero-cta-group .btn-green-lg { width: 100%; justify-content: center; }
+      .hero-pills { flex-direction: column; align-items: center; gap: 6px; }
 
       .benefit-grid { gap: 10px; }
       .benefit-card { padding: 20px 16px; }
@@ -1079,23 +1105,17 @@
       </a>
       <div style="display:flex;align-items:center;gap:16px;">
 <button class="nav-cta" onclick="openModal(event)">Garantir análise</button>
-        <button class="nav-burger" id="navBurger" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
       </div>
     </div>
   </div>
 </nav>
 
-<!-- Mobile nav -->
-<div class="mobile-nav" id="mobileNav">
-  <button class="mobile-x" id="mobileX"><i class="fas fa-times"></i></button>
-<button class="btn-green" onclick="closeMobileNav();openModal(event)">Garantir análise</button>
-</div>
 
 
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="hero">
+  <span class="hero-deco hero-deco--tl" aria-hidden="true"></span>
+  <span class="hero-deco hero-deco--bl" aria-hidden="true"></span>
   <div class="wrap">
     <div class="hero-grid">
       <div class="reveal">
@@ -1103,7 +1123,7 @@
           <span class="hero-badge-dot"></span>
           DIAGNÓSTICO ADS — <strong>100% GRATUITO</strong>
         </div>
-        <h1>Se o conteúdo do vídeo fez sentido para você,<br><span class="gn">o próximo passo é aplicar isso</span><br>diretamente em sua conta.</h1>
+        <h1>Se o conteúdo do vídeo fez sentido para você, <span class="gn">o próximo passo é aplicar isso</span> diretamente em sua conta.</h1>
         <p class="hero-sub">
           Receba um diagnóstico estratégico gratuito para identificar onde seus anúncios no Mercado Livre, Shopee ou Amazon estão limitando sua escala.
         </p>
@@ -1259,8 +1279,8 @@
             <div class="value-stat">
               <div class="value-stat-icon"><i class="fas fa-users"></i></div>
               <div class="value-stat-text">
-                <span class="value-stat-num">2 especialistas</span>
-                <span class="value-stat-desc">Focados 100% na sua conta</span>
+                <span class="value-stat-num">Time P4</span>
+                <span class="value-stat-desc">Focado 100% na sua conta</span>
               </div>
             </div>
             <div class="value-stat">
@@ -1305,7 +1325,7 @@
     </div>
     <div class="video-outer reveal">
     <div class="video-wrap" id="videoWrap" onclick="playVideo()">
-      <img class="video-thumb" id="videoThumb" src="assets/ChatGPT%20Image%2022%20de%20mai.%20de%202026%2C%2010_16_41.png" alt="Assista ao vídeo do diagnóstico" loading="lazy">
+      <img class="video-thumb" id="videoThumb" src="assets/video-thumb-diagnostico.png" alt="Assista ao vídeo: diagnóstico gratuito de ads para marketplaces" loading="lazy">
       <div class="video-play" id="videoPlay">
         <div class="play-btn"><i class="fas fa-play"></i></div>
       </div>
@@ -1341,7 +1361,7 @@
           <span>Quanto tempo dura o diagnóstico?</span>
           <div class="faq-q-icon"><i class="fas fa-plus" aria-hidden="true"></i></div>
         </div>
-        <div class="faq-body"><div class="faq-body-inner">A análise ao vivo dura 1 hora. Nesse tempo, dois estrategistas especialistas revisam suas campanhas e entregam um relatório prático com os pontos mais críticos para otimizar.</div></div>
+        <div class="faq-body"><div class="faq-body-inner">A análise ao vivo dura 1 hora. Nesse tempo, nosso time de especialistas revisa suas campanhas e entrega um relatório prático com os pontos mais críticos para otimizar.</div></div>
       </div>
 
       <div class="faq-item">
@@ -1349,7 +1369,7 @@
           <span>Quem faz o diagnóstico?</span>
           <div class="faq-q-icon"><i class="fas fa-plus" aria-hidden="true"></i></div>
         </div>
-        <div class="faq-body"><div class="faq-body-inner">O diagnóstico é realizado por 2 estrategistas de marketplace especializados em Mercado Livre, Shopee, Amazon e demais plataformas. São profissionais que gerenciam campanhas diariamente e dominam o Método P4.</div></div>
+        <div class="faq-body"><div class="faq-body-inner">O diagnóstico é realizado pelo time de especialistas de marketplace do Método P4, especializados em Mercado Livre, Shopee, Amazon e demais plataformas. São profissionais que gerenciam campanhas diariamente e dominam o Método P4.</div></div>
       </div>
 
       <div class="faq-item">
@@ -1528,13 +1548,6 @@
   const nav = document.getElementById('mainNav');
   window.addEventListener('scroll', () => nav.classList.toggle('solid', window.scrollY > 40), { passive: true });
 
-  // ── MOBILE MENU ──
-  const burger = document.getElementById('navBurger');
-  const mNav   = document.getElementById('mobileNav');
-  const mX     = document.getElementById('mobileX');
-  burger.addEventListener('click', () => { mNav.classList.add('open'); document.body.style.overflow = 'hidden'; });
-  function closeMobileNav() { mNav.classList.remove('open'); document.body.style.overflow = ''; }
-  mX.addEventListener('click', closeMobileNav);
 
   // ── MODAL ──
   function openModal(e) { if(e) e.preventDefault(); document.getElementById('overlay').classList.add('on'); document.body.style.overflow = 'hidden'; setTimeout(() => document.getElementById('f-nome').focus(), 350); }
@@ -1555,18 +1568,24 @@
   // ── UTM CAPTURE ──
   const _utms = (() => {
     const p = new URLSearchParams(window.location.search);
+    const ref = document.referrer || 'direto';
+    const src = p.get('utm_source') || (ref !== 'direto' ? new URL(ref).hostname : 'direto');
     return {
-      channel:      p.get('channel')      || p.get('canal')        || 'direto',
-      utm_source:   p.get('utm_source')   || 'direto',
+      channel:      p.get('channel') || p.get('canal') || 'direto',
+      utm_source:   src,
       utm_medium:   p.get('utm_medium')   || 'none',
       utm_campaign: p.get('utm_campaign') || 'none',
       utm_content:  p.get('utm_content')  || 'none',
+      referrer:     ref,
+      page_url:     window.location.href,
       timestamp:    new Date().toISOString(),
     };
   })();
 
   // ── FORM ──
-  const WEBHOOK_URL = 'https://n8n.srv1095468.hstgr.cloud/webhook/DiagnosticoAds';
+  const WEBHOOK_URL = 'https://n8n.srv1095468.hstgr.cloud/webhook/Diagnostico-organico';
+  const FUNIL = 'diagnostico-organico';
+  const CALENDAR_URL = 'https://calendar.app.google/zaNXcV4By3HUQuc88';
 
   function maskPhone(input) {
     const d = input.value.replace(/\D/g, '').slice(0, 11);
@@ -1621,20 +1640,55 @@
   async function handleSubmit(e) {
     e.preventDefault();
     if (!validateForm()) return;
+
     const btn = document.getElementById('btnSubmit');
-    btn.disabled = true; btn.textContent = 'ENVIANDO...';
+    if (btn.dataset.sending === '1') return;
+    btn.dataset.sending = '1';
+    btn.disabled = true;
+    btn.textContent = 'ENVIANDO...';
+
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const dataBR = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()}`;
+    const hora   = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
     const canais = [...document.querySelectorAll('#f-canais input[type="checkbox"]:checked')].map(c => c.value);
+
     const payload = {
-      nome:                 document.getElementById('f-nome').value.trim(),
-      email:                document.getElementById('f-email').value.trim(),
-      whatsapp:             document.getElementById('f-wpp').value.trim(),
-      whatsapp_confirmacao: document.getElementById('f-wpp2').value.trim(),
-      investimento_mensal:  document.getElementById('f-budget').value,
-      canais_marketplace:   canais,
-      ..._utms,
+      'Nome completo':    document.getElementById('f-nome').value.trim(),
+      'E-mail':           document.getElementById('f-email').value.trim(),
+      'WhatsApp':         document.getElementById('f-wpp').value.trim(),
+      'Confirmar WhatsApp': document.getElementById('f-wpp2').value.trim(),
+      'Quanto você investe em publicidade nos marketplaces hoje?': document.getElementById('f-budget').value,
+      'Em quais canais':  canais,
+      'Data de entrada de leads': dataBR,
+      'Data': dataBR,
+      'Hora': hora,
+      'Funil':    FUNIL,
+      channel:    _utms.channel,
+      source:     _utms.utm_source,
+      medium:     _utms.utm_medium,
+      campaign:   _utms.utm_campaign,
+      utm_content: _utms.utm_content,
+      referrer:   _utms.referrer,
+      page_url:   _utms.page_url,
+      timestamp:  _utms.timestamp,
     };
-    try { if (WEBHOOK_URL) await fetch(WEBHOOK_URL, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) }); } catch(_) {}
-    window.location.href = 'https://calendar.app.google/zaNXcV4By3HUQuc88';
+
+    const body = JSON.stringify(payload);
+
+    // sendBeacon: fire-and-forget, funciona mesmo durante redirect/unload
+    let sent = navigator.sendBeacon
+      ? navigator.sendBeacon(WEBHOOK_URL, new Blob([body], { type: 'application/json' }))
+      : false;
+
+    // fetch como fallback se sendBeacon não estiver disponível ou falhar
+    if (!sent) {
+      try {
+        await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body });
+      } catch (_) { /* webhook offline — redireciona mesmo assim */ }
+    }
+
+    window.location.href = CALENDAR_URL;
   }
 
   ['f-nome','f-email','f-wpp','f-wpp2'].forEach(id => {

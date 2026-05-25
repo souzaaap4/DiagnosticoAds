@@ -1,262 +1,90 @@
-# Relatório Técnico de Execução — LP-diagnostico
+# Log de alterações — LP-diagnostico
 
-## Data de referência
-- 2026-05-25
+## 2026-05-25
 
-## Objetivo solicitado
-- Remover a seção "Especialistas".
-- Migrar o projeto para HTML/CSS/JavaScript puro (sem React/TSX).
-- Depois, alinhar a página para ter a mesma estrutura do projeto:
-  - `C:\Users\Tainara\OneDrive\Documentos\Dev-projects\lead-diagnostico`
+- Migração de React/TSX para HTML/CSS/JS puro concluída. Pasta `src/` removida.
+- Estrutura espelhada do projeto `lead-diagnostico`.
+- Conteúdo textual alinhado ao copy do site publicado (`diagnosticoads.metodop4.com.br`).
+- Seção "Especialistas" removida (`<section id="especialistas">`).
+- Projeto reorganizado: removidos arquivos duplicados e temporários da raiz, `public/` limpa de arquivos órfãos do React antigo.
+- `vite.config.ts` simplificado: entry `index` gera `dist/index.html` direto, sem postbuild.
+- `.gitignore` atualizado: exclui `index.html` e `ads-assets/` gerados no build.
+- Hero centralizado: título, subtítulo e botão centralizados via CSS.
+- `<br>` removidos do título do hero — texto agora flui naturalmente sem quebras forçadas.
+- Automação e rastreamento atualizados:
+  - Funil alterado de `DiagnosticoAds` para `diagnostico-organico` (em `ads.html` e no Parse Body do N8N).
+  - Tracking melhorado: captura agora inclui `referrer` (domínio de origem), `page_url` e `utm_content` além dos UTMs anteriores. `utm_source` é inferido do referrer quando não há parâmetro na URL.
+  - `handleSubmit` corrigido: proteção anti double-submit via `btn.dataset.sending`, `sendBeacon` como método principal (funciona mesmo durante redirect/unload), `fetch` como fallback silencioso.
+  - Payload alinhado com os campos esperados pelo N8N: `Nome completo`, `E-mail`, `WhatsApp`, `Confirmar WhatsApp`, `Quanto você investe...`, `Em quais canais`, `Data de entrada de leads`, `Hora`, `Funil`.
+  - N8N atualizado: 3 planilhas em paralelo na mesma spreadsheet (`17uXnW7B3OoyGRgnJUtlV59S_JvaxyZe7A9R8PAJ900E`):
+    - **Organico** — todos os campos, automação de páginas orgânicas (Data, Hora, Nome, Email, WhatsApp, Confirmar WhatsApp, Investimento, Canais, Funil, Channel, Source, Medium, Campaign, Content, Referrer, Page URL, Timestamp).
+    - **Banco de Dados** — todos os campos idênticos ao Organico, funciona como banco de dados bruto centralizado.
+    - **CRM Geral** — visão de CRM; as perguntas "Quanto você investe?" e "Em quais canais?" são combinadas em uma única coluna `Pergunta adicional` (ex.: `Investimento: R$500/mês | Canais: Shopee, Amazon`). Colunas: Data, Hora, Nome, Email, WhatsApp, Confirmar WhatsApp, Pergunta adicional, Funil, Channel, Source, Medium, Campaign, Timestamp.
+  - Parse Body do N8N corrigido: lê `confirmar_whatsapp` / `whatsapp_confirmacao`, `investimento_mensal`, `canais_marketplace` — compatível com formatos antigo e novo.
+  - JSON exportável salvo em `docs/n8n-diagnostico-organico.json` — importar no N8N via "Import workflow".
+- Documento de padrão criado em `docs/PADRAO-AUTOMACAO-TRACKING.md` com template de código e prompt reutilizável para novas páginas.
+- Script Google Apps Script criado em `docs/setup-organico.gs`: cria aba "Organico" com 35 colunas exatas, 3 grupos de cor no cabeçalho, validações por dropdown, formatação condicional (Situação, MQL, Agendado), zebrado, filtro, congelamento de linha e colunas, proteção de aviso.
+- Script Google Apps Script criado em `docs/setup-banco-de-dados.gs`: cria aba "Banco de Dados" com 17 colunas, notas nos cabeçalhos, validações, formatação condicional na coluna Channel, zebrado e proteção.
+- N8N Sheet: Organico — mapeamento corrigido para usar nomes reais das colunas da planilha (`Entrada leads`, `Qual seu e-mail?`, `Qual o seu WhatsApp?`, `Confirme seu WhatsApp`). Campos "Quanto você investe?" e "Em quais canais" consolidados na coluna `Pergunta adicional` (formato: `Investimento: X | Canais: Y`), igual ao CRM Geral.
+- Webhook testado 3x via POST no endpoint `https://n8n.srv1095468.hstgr.cloud/webhook/Diagnostico-organico` — todos retornaram `200 OK` com `{"message":"Workflow was started"}`.
 
----
+## SEO — Análise e Correções (2026-05-25)
 
-## Registro detalhado (cronológico)
+### Problemas críticos encontrados e corrigidos
 
-### 1) Auditoria inicial do projeto
-Foi feito levantamento da estrutura do repositório para mapear os pontos de alteração:
-- Listagem de arquivos/pastas do projeto.
-- Leitura de arquivos centrais:
-  - `src/App.tsx`
-  - `src/main.tsx`
-  - `src/sections/*`
-  - `src/styles/*`
-  - `src/lib/*`
-  - `src/config/runtime.ts`
-  - `ads.html`, `index.html`, `vite.config.ts`, `package.json`
+- **URL canônica errada**: estava apontando para `https://metodop4.com.br/diagnostico-ads/` enquanto o domínio real é `https://diagnosticoads.metodop4.com.br`. Corrigido em `<link rel="canonical">`, `og:url`, `og:image`, `twitter:image` e schema.org.
+- **Title fraco**: `DiagnósticoAds` (12 chars, sem palavras-chave). Corrigido para `Diagnóstico Gratuito de Ads — Mercado Livre, Shopee e Amazon | Método P4` (~72 chars).
+- **Meta description genérica**: expandida com proposta de valor clara e informação de tempo (1 hora, 2 estrategistas).
+- **Nomes de arquivo péssimos para SEO**: `ChatGPT Image 22 de mai. de 2026, 10_16_41.png` renomeado para `assets/video-thumb-diagnostico.png`. Referências no HTML atualizadas.
+- **Imagens de fundo removidas do CSS**: `09_03_10.png` (hero) e `09_04_39.png` (especialistas) não existem e não serão usadas — `url()` removido do CSS. Seções usam `background-color: var(--dark)` como fundo sólido.
+- **Preload corrigido**: agora aponta para `assets/video-thumb-diagnostico.png` (arquivo que existe).
+- **Alt text do video thumb**: melhorado para incluir palavras-chave.
 
-Conclusão da auditoria:
-- O projeto estava em React + Vite, com renderização por componentes TSX.
-- A seção "Especialistas" estava implementada em `AuthoritySection`.
+### Problemas identificados (não críticos / ação pendente)
 
----
+- `assets/og-image.png` não existe — compartilhamentos em redes sociais não terão preview. Criar uma imagem 1200×630px e salvar nesse caminho.
+- `assets/hero-bg.png` e `assets/especialistas-bg.png` precisam ser criados/colocados em `assets/`.
+- `public/robots.txt` criado: `Allow: /` + referência ao sitemap.
+- `public/sitemap.xml` criado com a URL canônica e `priority: 1.0`. Serão copiados para `dist/` no build do Vite.
+- Hierarquia de headings: footer usa `<h4>` sem `<h3>` intermediário (sem impacto real no SEO, mas afeta acessibilidade).
+- Font Awesome carregado de CDN externo — considerar auto-hospedar para eliminar dependência externa.
+- Documento de padrão de SEO criado em `docs/PADRAO-SEO.md`: template de `<head>`, schema.org, robots.txt, sitemap, regras de nomenclatura de imagens, checklist e prompt reutilizável para novas páginas.
 
-### 2) Detecção de árvore Git suja e procedimento de segurança
-Antes de alterar código, foi identificado que o repositório já tinha várias mudanças locais (modificados, removidos e não rastreados).
+## Ajustes finais e deploy (2026-05-25)
 
-Ação executada (confirmada por você):
-- Primeiro organizar estado atual (backup), depois executar migração.
+### Conteúdo
+- "2 especialistas" substituído por "Time P4" em todos os lugares (value-card, FAQ body, schema.org) — contexto correto para equipe variável.
+- Meta description e respostas do FAQ atualizadas: "dois estrategistas" → "nosso time de especialistas" / "pelo time de especialistas de marketplace do Método P4".
 
-Backup criado:
-- Comando usado: `git stash push -u -m "pre-html-css-js-migration backup 2026-05-25"`
-- Resultado:
-  - `stash@{0}: On main: pre-html-css-js-migration backup 2026-05-25`
-  - Árvore local ficou limpa para iniciar migração com segurança.
+### Automação
+- URL do webhook corrigida em `ads.html`: `webhook/DiagnosticoAds` → `webhook/Diagnostico-organico`.
+- URL fixa confirmada: `https://n8n.srv1095468.hstgr.cloud/webhook/Diagnostico-organico`.
 
----
+### Visual
+- Hero: fundo ajustado para cinza-verde suave (não estourado).
+- Nav: agora com fundo escuro semi-transparente por padrão (resolve invisibilidade dos ícones brancos no hero claro).
+- Glow central, acentos nos cantos e `border-bottom` adicionados ao hero para profundidade visual.
 
-### 3) Migração para HTML/CSS/JavaScript puro (fase estática)
-Foi executada a conversão da aplicação React para versão estática:
+### Responsividade mobile
+- Removido `max-width: 18ch` do h1 no breakpoint 480px (limitava e cortava o título).
+- `hero-cta-group`: `align-items: stretch` + botão `width: 100%` no 480px, centralizado no 768px.
+- `hero-pills`: centralizado com `justify-content: center` no 768px.
+- `hero-cta-hint`: centralizado no 768px.
 
-#### 3.1) Recursos estáticos criados/copiados
-- `public/styles.css` (derivado do CSS compilado já existente para preservar visual)
-- `public/main.js` (lógica de interação da página em JS puro)
-- Assets copiados para `public/`:
-  - `public/video-capa.png`
-  - `public/logos/*`
+### Deploy Hostgator
+- Build gerado com `npm run build` → `dist/`.
+- Pasta `diagnostico-organico-tay/` criada com conteúdo de `dist/` + `ads.html` renomeado para `index.html`.
+- `.htaccess` corrigido: referências antigas a `ads-assets/` e `ads.html` removidas, `RewriteBase` atualizado para `/diagnostico-organico-tay/`, cache de assets adicionado.
+- **Para subir no Hostgator**: fazer upload de toda a pasta `diagnostico-organico-tay/` via FTP ou cPanel File Manager para dentro de `public_html/`.
 
-#### 3.2) HTML estático criado
-- `ads.html` e `index.html` foram reescritos para estrutura estática.
-- Lógica portada para JS puro:
-  - rolagem para formulário,
-  - reprodução de vídeo,
-  - máscara e validação de WhatsApp,
-  - seleção de canais,
-  - envio ao webhook com `sendBeacon` + fallback `fetch`.
+### Limpeza de arquivos (2026-05-25)
 
-#### 3.3) Configuração de build simplificada
-- `vite.config.ts` simplificado para build estático.
-- `package.json` reduzido para dependência principal de build (`vite`).
-- `npm install` executado para sincronizar lockfile e remover dependências antigas.
+**Apagados (não referenciados / obsoletos):**
+- `assets/`: amazon.png, magalu.png, meli.png, shein.png, shopee.png, tiktok.png
+- `fonts/`: Sora-ExtraLight.ttf, Sora-Thin.ttf, Sora-VariableFont_wght.ttf, OFL.txt, README.txt
+- `public/logos/`: pasta inteira (amazon.png, magalu.png, mercado-livre.svg, shopee.png)
+- `public/htaccess-hostgator.txt`: substituído pelo `.htaccess` correto em `diagnostico-organico-tay/`
+- `docs/`: ARCHITECTURE.md, DIAGRAMS.md, ENGINEERING_REVIEW.md, OPERATIONS.md, style.css (todos templates genéricos)
+- Raiz: `CHANGELOG.md`, `.env.example` (desatualizados, substituídos pelo relatorio.md)
 
-#### 3.4) Limpeza de código legado React
-- Pasta `src/` removida.
-- `postcss.config.mjs` removido.
-
-#### 3.5) Build validado
-- `npm run build` executado com sucesso.
-- Artefatos estáticos gerados em `dist/`.
-
-Observação:
-- Nesta fase, a seção "Especialistas" havia sido retirada do fluxo da versão estática gerada manualmente.
-
----
-
-### 4) Ajuste solicitado posteriormente: igualar estrutura ao projeto `lead-diagnostico`
-Após a migração estática, foi solicitado espelhar a estrutura da página de referência.
-
-Ações executadas:
-- Cópia da estrutura HTML de referência para este projeto:
-  - `lead-diagnostico/index.html` -> `LP-diagnostico/ads.html`
-  - `lead-diagnostico/index.html` -> `LP-diagnostico/index.html`
-- Cópia de recursos visuais e fontes:
-  - `lead-diagnostico/assets/*` -> `LP-diagnostico/public/assets/*`
-  - `lead-diagnostico/fonts/*` -> `LP-diagnostico/public/fonts/*`
-- Para refletir organização da referência também na raiz:
-  - criação de `assets/` e `fonts/` na raiz do `LP-diagnostico`
-  - cópia dos mesmos arquivos para essas pastas
-
-Resultado:
-- Estrutura da página passou a seguir o modelo do `lead-diagnostico`.
-- Isso reintroduz a seção "Especialistas", porque ela existe no HTML de referência copiado.
-
----
-
-### 5) Builds e validações finais
-Build executado novamente após espelhamento:
-- `npm run build` -> sucesso.
-
-Mensagens de aviso observadas no build (não bloqueantes):
-- referências com nomes codificados (`%20`, `%2C`) para imagens com espaços/vírgulas podem não ser resolvidas durante o pipeline, mas os arquivos existem em `dist/assets`.
-- fontes passaram a ser empacotadas em `dist/ads-assets` após ajuste de estrutura.
-
----
-
-## Estado atual do projeto
-
-### Resultado funcional
-- Página principal está com estrutura espelhada do projeto `lead-diagnostico`.
-- Build está passando.
-
-### Itens importantes para controle
-- Existe um backup completo do estado anterior em:
-  - `stash@{0}` com a mensagem `pre-html-css-js-migration backup 2026-05-25`
-
-Comandos úteis para recuperar/verificar:
-- Ver stash: `git stash list`
-- Aplicar stash sem remover: `git stash apply stash@{0}`
-- Aplicar e remover da pilha: `git stash pop stash@{0}`
-
----
-
-## Arquivos-chave alterados nesta execução
-- `ads.html`
-- `index.html`
-- `vite.config.ts`
-- `package.json`
-- `package-lock.json`
-- `public/assets/*`
-- `public/fonts/*`
-- `assets/*` (raiz)
-- `fonts/*` (raiz)
-- Remoções de legado React (`src/*`, `postcss.config.mjs`)
-
----
-
-## Observação de consistência de requisitos
-- Requisito inicial: remover seção "Especialistas".
-- Requisito posterior: deixar com a mesma estrutura de `lead-diagnostico`.
-- Como o HTML de referência contém "Especialistas", a última solicitação sobrescreveu o estado anterior e trouxe essa seção de volta.
-
-Se necessário, na próxima etapa pode ser feita uma versão "estrutura igual ao lead-diagnostico", porém sem o bloco de "Especialistas".
-
----
-
-## Atualização posterior — fidelidade ao conteúdo original publicado
-
-### Solicitação
-- "Ser fiel ao conteúdo original" de `https://diagnosticoads.metodop4.com.br/`.
-
-### Verificação feita
-- Foi capturado o HTML publicado da homepage.
-- Identificado que o site online usa um shell HTML enxuto com React montado por bundle:
-  - `./ads-assets/ads-DelTht8T.js`
-  - `./ads-assets/ads-DIWLxrol.css`
-
-### Ações executadas
-1. Download do shell publicado e cópia para os arquivos locais:
-   - `tmp_remote_index.html` -> `ads.html`
-   - `tmp_remote_index.html` -> `index.html`
-
-2. Download dos assets exatos usados em produção para a pasta local `ads-assets/`:
-   - `ads-DelTht8T.js`
-   - `ads-DIWLxrol.css`
-   - `especialistas-D4VD691H.png`
-   - `magalu-OInpqTNw.png`
-   - `mercado-livre-BwIUklkS.svg`
-   - `video-capa-BZlhIfWe.png`
-
-3. Download dos arquivos de raiz referenciados pelo shell:
-   - `01.png`
-   - `tracking.js`
-
-### Resultado
-- O projeto local agora usa o mesmo shell e os mesmos arquivos centrais de produção, mantendo fidelidade ao conteúdo original publicado.
-- Isso inclui a estrutura/fluxo existente no bundle oficial (incluindo seções renderizadas por ele).
-
----
-
-## Ajuste de direcionamento — conteúdo escrito (não estrutura)
-
-### Pedido recebido
-- "conteúdo escrito, não a estrutura"
-
-### Interpretação aplicada
-- Manter a estrutura visual/base que estava sendo usada do `lead-diagnostico`.
-- Ajustar o texto para ficar alinhado ao conteúdo original do `diagnosticoads.metodop4.com.br`.
-
-### Ações executadas
-1. Estrutura base restaurada:
-   - `lead-diagnostico/index.html` copiado para `ads.html` e `index.html`.
-
-2. Edição textual ampla em `ads.html` (espelhada em `index.html`):
-   - Hero (badge, headline, subtítulo e CTA) com copy do original.
-   - Seção de análise com títulos/descrições do conteúdo original.
-   - Seção de especialistas com texto alinhado ao original.
-   - Seção de vídeo/próximo passo com copy do original.
-   - Formulário/modal com labels e opções alinhadas ao original:
-     - Nome completo
-     - E-mail
-     - WhatsApp
-     - Confirmar WhatsApp
-     - Quanto você investe em publicidade nos marketplaces hoje?
-     - Em quais canais
-     - Opções de investimento no formato com "/mês".
-
-3. Ajustes funcionais para alinhar com o original:
-   - Webhook alterado para:
-     - `https://n8n.srv1095468.hstgr.cloud/webhook/DiagnosticoAds`
-   - Redirecionamento alterado para:
-     - `https://calendar.app.google/zaNXcV4By3HUQuc88`
-
-4. Metadados textuais ajustados:
-   - `title` para `DiagnósticoAds`.
-   - descrições principais para copy de diagnóstico estratégico gratuito.
-
-### Validação
-- Build executado com sucesso (`npm run build`).
-- Avisos de caminho codificado em imagens foram mantidos como não bloqueantes.
-
----
-
-## Remoção solicitada — seção "Especialistas"
-
-### Pedido
-- Remover a seção "Especialistas".
-
-### Ação executada
-- Removido o bloco HTML da seção dedicada:
-  - `<section class="especialistas-sec" id="especialistas"> ... </section>`
-- Arquivos atualizados:
-  - `ads.html`
-  - `index.html`
-
-### Observação
-- A remoção foi somente da seção dedicada `id="especialistas"`.
-- Menções textuais à palavra "especialistas" podem permanecer em outras seções (ex.: FAQ ou textos descritivos), pois não fazem parte da seção removida.
-
----
-
-## Ajuste visual — título centralizado no Hero
-
-### Pedido
-- Centralizar o título principal do hero.
-
-### Alteração aplicada
-- CSS de `.hero h1` atualizado em `ads.html` e `index.html` com:
-  - `margin-left: auto;`
-  - `margin-right: auto;`
-  - `text-align: center;`
-
-### Resultado
-- O título principal do hero agora aparece centralizado horizontalmente.
+**README.md reescrito**: reflete estrutura atual do projeto (HTML puro, automação N8N, deploy Hostgator, documentação).

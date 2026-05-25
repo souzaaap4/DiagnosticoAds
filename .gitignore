@@ -14,3 +14,5 @@ yarn-error.log*
 # Build artifacts gerados automaticamente
 index.html
 ads-assets/
+diagnostico-organico-tay/
+dist/
