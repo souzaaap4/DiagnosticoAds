@@ -2,6 +2,31 @@
 
 ## 2026-05-25 (tarde)
 
+### Correções de automação N8N — nome e pergunta adicional
+
+**Problema 1 — Nome não ia para nenhuma das 3 planilhas:**
+- Causa: formulário enviava apenas `'Nome completo'` (chave com espaço), que pode ser interpretada de formas diferentes dependendo do ambiente/browser via `sendBeacon`.
+- Correção em `ads.html`: payload agora envia `nome` (sem espaço) E `'Nome completo'` simultaneamente. O Parse Body3 prioriza `nome` primeiro: `pick(data, ['nome', 'Nome completo', 'name'])`.
+
+**Problema 2 — Pergunta adicional vazia ou com slugs ilegíveis:**
+- Causa 1: formulário enviava os `value` dos inputs (`ate_5k`, `mercado_livre`) em vez dos rótulos legíveis.
+- Causa 2: Parse Body3 montava o campo a partir dos slugs, gerando `"Investimento: ate_5k | Canais: mercado_livre"`.
+- Correção em `ads.html`: valores convertidos para rótulos antes do envio. Exemplos: `ate_5k` → `"Até R$5.000/mês"`, `mercado_livre` → `"Mercado Livre"`. Campo `pergunta_adicional` montado no formulário antes de enviar: `"Investimento: Até R$5.000/mês | Canais: Shopee, Amazon"`.
+- Parse Body3 agora usa o campo pronto se vier no payload: `data['pergunta_adicional'] || data['Pergunta adicional'] || [monta aqui]`.
+
+**Outras correções no payload (`ads.html`):**
+- Todos os campos têm dupla chave: simples (`nome`, `email`, `whatsapp`, `investimento_mensal`, `canais_marketplace`) + legada (`'Nome completo'`, `'E-mail'`, etc.) para compatibilidade com qualquer versão do N8N.
+- `investimento_mensal` e `canais_marketplace` enviados como strings legíveis (não slugs).
+
+**JSON do N8N (`docs/n8n-diagnostico-organico.json`) atualizado:**
+- Sobrescrito com o workflow real em execução (nó `Parse Body3`, planilha `1FdV_XZNwPtaEGqyUqErTJ4LJUwlgOn3tul_doV3WKZA` para Organico/Banco de Dados, `17uXnW7B3OoyGRgnJUtlV59S_JvaxyZe7A9R8PAJ900E` para CRM).
+- Parse Body3 corrigido: prioridade de picks atualizada, `pergunta_adicional` lida do payload ou montada como fallback.
+- Webhook path corrigido de `DiagnosticoAds` para `Diagnostico-organico` no JSON.
+
+**Teste final:** POST com payload completo retornou `200 OK`. Nome, email, WhatsApp e `Pergunta adicional` confirmados nas 3 planilhas.
+
+### Outros ajustes
+
 - Webhook testado via POST — retornou `200 OK` com `{"message":"Workflow was started"}`. Endpoint confirmado ativo: `https://n8n.srv1095468.hstgr.cloud/webhook/Diagnostico-organico`.
 - `vercel.json` corrigido: adicionada regra de roteamento `"src": "/(.*)", "dest": "/ads.html"` para resolver erro 404 no Vercel (Vite gera `dist/ads.html`, não `dist/index.html`).
 - LICENSE: email de contato atualizado para `souza.codes@gmail.com`.
