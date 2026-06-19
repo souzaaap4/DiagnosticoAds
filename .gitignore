@@ -1,7 +1,5 @@
 node_modules/
 dist/
-.vercel/
-deploy/
 .vscode/
 .env
 .env.*
@@ -11,9 +9,3 @@ desktop.ini
 npm-debug.log*
 pnpm-debug.log*
 yarn-error.log*
-
-# Build artifacts gerados automaticamente
-index.html
-ads-assets/
-diagnostico-organico-tay/
-dist/

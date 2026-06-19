@@ -8,6 +8,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-P35RFKZK');</script>
 <!-- End Google Tag Manager -->
+<!-- Microsoft Clarity -->
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","x8mhuw261e");</script>
+<!-- End Microsoft Clarity -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Diagnóstico Completo de Conta — Mercado Livre, Shopee e Amazon | Método P4</title>
@@ -470,7 +473,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
        O QUE É O DIAGNÓSTICO
     ════════════════════════ */
     .diagnostico-sec {
-      background: linear-gradient(180deg, #ffffff 0%, #f4f8fd 100%);
+      background: #e6f3fa;
       padding: var(--section-uniform-pad) 0;
       min-height: var(--section-uniform-min);
     }
@@ -716,40 +719,162 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     /* ════════════════════════
        FAQ
     ════════════════════════ */
+    /* ════════════════════════
+       QUEM SOMOS
+    ════════════════════════ */
+    .sobre-sec {
+      background: #e9f0f5;
+      padding: var(--section-uniform-pad) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .sobre-sec::before {
+      content: '';
+      position: absolute;
+      inset: -10% -8%;
+      background:
+        radial-gradient(ellipse 640px 440px at 8% 46%, rgba(88,222,86,.07) 0%, transparent 66%),
+        radial-gradient(ellipse 520px 360px at 92% 18%, rgba(70,125,214,.07) 0%, transparent 60%);
+      filter: blur(18px);
+      opacity: 1;
+      animation: sobreFloat 20s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    .sobre-sec::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(135deg, rgba(0,0,0,.018) 0 1px, transparent 1px 22px);
+      opacity: .5;
+      pointer-events: none;
+    }
+    @keyframes sobreFloat {
+      0% { transform: translate3d(-1.5%, -1%, 0) scale(1); }
+      100% { transform: translate3d(1.5%, 1%, 0) scale(1.03); }
+    }
+    .sobre-sec .wrap { position: relative; z-index: 2; }
+    .sobre-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      padding: 12px 0;
+    }
+    .sobre-grid::before {
+      content: '';
+      position: absolute;
+      top: 50%; right: -4%;
+      width: min(40vw, 540px); height: min(40vw, 540px);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(88,222,86,.17) 0%, rgba(70,125,214,.13) 34%, rgba(255,255,255,.16) 54%, transparent 72%);
+      filter: blur(20px);
+      transform: translateY(-50%);
+      opacity: .92; z-index: -1; pointer-events: none;
+    }
+    .sobre-grid::after {
+      content: '';
+      position: absolute;
+      left: -4%; top: 6%;
+      width: min(30vw, 360px); height: min(18vw, 220px);
+      background: radial-gradient(ellipse, rgba(88,222,86,.06) 0%, transparent 72%);
+      opacity: .8; filter: blur(6px); z-index: -1; pointer-events: none;
+    }
+    .sobre-inner { max-width: 100%; }
+    .sobre-photo-group { display: grid; gap: 18px; align-items: start; justify-items: stretch; overflow: visible; }
+    .sobre-photo-card {
+      position: relative; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 12px 48px rgba(0,0,0,.14);
+      border: 1px solid rgba(88,222,86,.22);
+      outline: 4px solid rgba(88,222,86,.28); outline-offset: 4px;
+      background: rgba(255,255,255,.7);
+    }
+    .sobre-photo-card img { width: 100%; height: 100%; aspect-ratio: 16/11; object-fit: cover; display: block; }
+    .sobre-photo-card.secondary {
+      width: 100%; justify-self: end; margin-top: -108px;
+      transform: translateX(clamp(72px, 11vw, 168px));
+      box-shadow: 0 18px 42px rgba(18,32,49,.18);
+      border-color: rgba(70,125,214,.22); outline-color: rgba(70,125,214,.24);
+    }
+    .sobre-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+    }
+    .sobre-label::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(88,222,86,.22); }
+    .sobre-h {
+      font-size: clamp(1.9rem, 3.4vw, 3rem); font-weight: 800;
+      text-transform: uppercase; letter-spacing: -.025em;
+      color: var(--dark); line-height: 1.06; margin-bottom: 6px;
+    }
+    .sobre-h .gn { color: var(--green); }
+    .sobre-tagline { font-size: clamp(.84rem, 1.4vw, 1rem); font-weight: 300; font-style: italic; color: rgba(17,28,44,.45); letter-spacing: .03em; margin-bottom: 28px; }
+    .sobre-divider { width: 48px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, var(--green) 0%, rgba(88,222,86,.3) 100%); margin-bottom: 28px; }
+    .sobre-body { border-left: 2px solid rgba(88,222,86,.5); padding-left: 20px; margin-bottom: 28px; }
+    .sobre-p { font-size: .95rem; font-weight: 400; line-height: 1.82; color: rgba(17,28,44,.68); margin-bottom: 12px; }
+    .sobre-p:last-child { margin-bottom: 0; }
+    .pillar-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
+    .pillar-pill {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(17,28,44,.06); border-radius: 100px; padding: 9px 16px;
+      font-size: .78rem; font-weight: 600; color: var(--dark);
+      border: 1px solid rgba(17,28,44,.12);
+      transition: background .2s, border-color .2s;
+    }
+    .pillar-pill:hover { background: rgba(88,222,86,.18); border-color: rgba(88,222,86,.4); }
+    .pillar-pill i { color: var(--green); font-size: .74rem; }
+    @media (max-width: 900px) {
+      .sobre-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    @media (max-width: 480px) {
+      .sobre-photo-card.secondary { transform: translateX(clamp(32px, 8vw, 72px)); margin-top: -72px; }
+    }
+
     .faq-sec {
-      background: linear-gradient(180deg, #ffffff 0%, #f4f8fd 100%);
+      background:
+        radial-gradient(900px 500px at 12% 30%, rgba(88,222,86,.06) 0%, transparent 60%),
+        radial-gradient(700px 400px at 88% 70%, rgba(70,125,214,.07) 0%, transparent 60%),
+        var(--section-blue);
       padding: var(--section-uniform-pad) 0;
       min-height: var(--section-uniform-min);
     }
     .faq-head { text-align: center; margin-bottom: 48px; }
-    .sec-title-dark { font-size: clamp(1.55rem, 3vw, 2.3rem); font-weight: 800; text-transform: uppercase; letter-spacing: -.02em; color: var(--dark); }
-    .sec-title-dark .gn { color: var(--green2); }
+    .sec-title-dark { font-size: clamp(1.55rem, 3vw, 2.3rem); font-weight: 800; text-transform: uppercase; letter-spacing: -.02em; color: var(--white); }
+    .sec-title-dark .gn { color: var(--green); }
 
     .faq-list {
       display: flex; flex-direction: column; gap: 0;
       max-width: 840px; margin: 0 auto 44px;
       border-radius: 16px; overflow: hidden;
-      border: 1px solid rgba(24,35,50,.1);
-      background: #ffffff;
-      box-shadow: 0 16px 48px rgba(16,27,43,.08);
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.05);
+      box-shadow: 0 16px 48px rgba(0,0,0,.25);
     }
-    .faq-item { border-bottom: 1px solid rgba(24,35,50,.08); }
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,.07); }
     .faq-item:last-child { border-bottom: none; }
     .faq-q {
       display: flex; justify-content: space-between; align-items: center;
       gap: 16px; padding: 20px 24px; cursor: pointer; user-select: none;
       background: transparent; transition: background .2s;
     }
-    .faq-q span { font-size: .96rem; font-weight: 600; color: var(--dark); line-height: 1.4; }
-    .faq-q-icon { width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; background: rgba(24,35,50,.07); display: flex; align-items: center; justify-content: center; transition: background .25s; }
-    .faq-q-icon i { font-size: .75rem; color: var(--text-g); transition: transform .3s, color .25s; }
-    .faq-item.open .faq-q { background: rgba(88,222,86,.1); }
-    .faq-item.open .faq-q span { color: var(--dark); }
-    .faq-item.open .faq-q-icon { background: var(--dark); }
-    .faq-item.open .faq-q-icon i { color: var(--white); transform: rotate(45deg); }
-    .faq-body { max-height: 0; overflow: hidden; transition: max-height .38s ease; background: rgba(24,35,50,.02); }
-    .faq-body-inner { padding: 18px 24px; font-size: .9rem; color: #5a687a; line-height: 1.72; }
+    .faq-q span { font-size: .96rem; font-weight: 600; color: var(--white); line-height: 1.4; }
+    .faq-q-icon { width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; transition: background .25s; }
+    .faq-q-icon i { font-size: .75rem; color: rgba(231,235,241,.8); transition: transform .3s, color .25s; }
+    .faq-item.open .faq-q { background: rgba(88,222,86,.08); }
+    .faq-item.open .faq-q span { color: var(--white); }
+    .faq-item.open .faq-q-icon { background: var(--green); }
+    .faq-item.open .faq-q-icon i { color: var(--dark); transform: rotate(45deg); }
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height .38s ease; background: rgba(255,255,255,.03); }
+    .faq-body-inner { padding: 18px 24px; font-size: .9rem; color: rgba(231,235,241,.72); line-height: 1.72; }
     .faq-cta-wrap { text-align: center; }
+
+    /* ════════════════════════
+       DIVISOR
+    ════════════════════════ */
+    .sec-divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--green) 30%, rgba(88,222,86,.4) 50%, var(--green) 70%, transparent 100%);
+      opacity: .35;
+    }
 
     /* ════════════════════════
        DEPOIMENTOS
@@ -1352,6 +1477,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+<!-- ═══ QUEM SOMOS ═══ -->
+<section class="sobre-sec" id="sobre">
+  <div class="wrap">
+    <div class="sobre-grid">
+      <div class="sobre-inner">
+        <div class="reveal">
+          <span class="sobre-label">Quem Somos</span>
+          <h2 class="sobre-h">Método <span class="gn">P4</span></h2>
+          <p class="sobre-tagline">Estratégia. Dados. Resultado.</p>
+          <div class="sobre-divider" aria-hidden="true"></div>
+
+          <div class="sobre-body">
+            <p class="sobre-p">O Método P4 ajuda sellers a crescer dentro dos marketplaces com base em quatro pilares: Produto, Plataforma, Performance e Processos.</p>
+            <p class="sobre-p">Desde 2020, acompanhamos operações em plataformas como Shopee, Mercado Livre, Amazon e TikTok Shop, participando da construção de estratégias voltadas ao crescimento dos resultados.</p>
+            <p class="sobre-p">Este diagnóstico foi desenvolvido a partir da experiência adquirida nesse trabalho diário para identificar com precisão os gargalos que impedem sua operação de crescer.</p>
+          </div>
+
+          <div class="pillar-grid" aria-label="Pilares do Método P4">
+            <div class="pillar-pill"><i class="fas fa-box" aria-hidden="true"></i>Produto</div>
+            <div class="pillar-pill"><i class="fas fa-store" aria-hidden="true"></i>Plataforma</div>
+            <div class="pillar-pill"><i class="fas fa-chart-line" aria-hidden="true"></i>Performance</div>
+            <div class="pillar-pill"><i class="fas fa-cogs" aria-hidden="true"></i>Processos</div>
+          </div>
+
+          <button class="btn-green" onclick="openModal(event)">
+            Quero agendar meu diagnóstico <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="sobre-photo-group reveal d1">
+        <div class="sobre-photo-card primary">
+          <img src="assets/equipe-p4.jpg" alt="Equipe Método P4" loading="lazy">
+        </div>
+        <div class="sobre-photo-card secondary">
+          <img src="assets/equipe-p4-reuniao.jpg" alt="Equipe Método P4 em reunião" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- ═══ FAQ ═══ -->
 <section class="faq-sec" id="faq">
   <div class="wrap">
@@ -1400,14 +1568,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="faq-body"><div class="faq-body-inner">Você recebe um plano de ação claro com os principais pontos de melhoria da sua conta — catálogo, reputação, anúncios e rentabilidade. Não há nenhuma obrigação de contratar nada. Se fizer sentido dar um próximo passo juntos, apresentamos as opções — sem pressão.</div></div>
       </div>
 
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)" role="button" tabindex="0">
-          <span>Preciso investir em anúncios para participar do diagnóstico?</span>
-          <div class="faq-q-icon"><i class="fas fa-plus" aria-hidden="true"></i></div>
-        </div>
-        <div class="faq-body"><div class="faq-body-inner">Não. Mesmo quem ainda não investe em anúncios pode se beneficiar muito do diagnóstico — há muito a otimizar em catálogo, reputação e precificação. Trabalhamos com lojistas em diferentes estágios, do iniciante ao operador de grandes volumes, e identificamos oportunidades relevantes para cada realidade.</div></div>
-      </div>
-
     </div>
     <div class="faq-cta-wrap reveal d2">
       <button class="btn-green btn-green-lg" onclick="openModal(event)">Quero agendar meu diagnóstico</button>
@@ -1415,6 +1575,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+
+<div class="sec-divider"></div>
 
 <!-- ═══ FOOTER ═══ -->
 <footer>
