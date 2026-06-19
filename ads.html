@@ -1225,6 +1225,51 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       .check-num { font-size: 1.1rem; min-width: 28px; }
       .modal h2 { font-size: 1.12rem; }
     }
+
+    /* ════════════════════════
+       MOBILE-FIXES — breakpoints intermediários e correções de colapso
+    ════════════════════════ */
+
+    /* 900px — colapsar grids que ainda ficam em 2+ colunas */
+    @media (max-width: 900px) {
+      /* benefit-grid: estava 2fr em 900px, colapsar para 1fr */
+      .benefit-grid { grid-template-columns: 1fr; gap: 14px; }
+
+      /* depo-grid: estava 2fr em 900px, colapsar para 1fr */
+      .depo-grid { grid-template-columns: 1fr; }
+
+      /* mkt-grid (3 colunas): colapsar para 2 colunas em 900px */
+      .mkt-grid { grid-template-columns: repeat(2, 1fr); max-width: 420px; }
+
+      /* .sobre-photo-card.secondary: zerar margin-top e transform para não vazar no grid 1fr */
+      .sobre-photo-card.secondary { margin-top: 0; transform: none; }
+    }
+
+    /* 640px — breakpoint intermediário ausente */
+    @media (max-width: 640px) {
+      /* hero background-position */
+      .hero { background-position: 60% center; }
+
+      /* value-card padding intermediário */
+      .value-card { padding: 28px 20px; }
+
+      /* btn-green não-lg: garantir width 100% nos CTAs de seção */
+      .descobrir-cta .btn-green,
+      .mktplaces-cta .btn-green,
+      .faq-cta-wrap .btn-green { width: 100%; }
+    }
+
+    /* 480px — já existe, apenas complementar o que falta */
+    @media (max-width: 480px) {
+      /* hero background-position mais centralizado */
+      .hero { background-position: 50% center; }
+
+      /* faq-q padding conforme spec: 14px 16px */
+      .faq-q { padding: 14px 16px; }
+
+      /* pillar-grid: centralizar pílulas em mobile */
+      .pillar-grid { justify-content: center; }
+    }
   </style>
 </head>
 <body>
@@ -1496,9 +1541,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="pillar-grid" aria-label="Pilares do Método P4">
             <div class="pillar-pill"><i class="fas fa-box" aria-hidden="true"></i>Produto</div>
+            <div class="pillar-pill"><i class="fas fa-tag" aria-hidden="true"></i>Preço</div>
             <div class="pillar-pill"><i class="fas fa-store" aria-hidden="true"></i>Plataforma</div>
             <div class="pillar-pill"><i class="fas fa-chart-line" aria-hidden="true"></i>Performance</div>
-            <div class="pillar-pill"><i class="fas fa-cogs" aria-hidden="true"></i>Processos</div>
           </div>
 
           <button class="btn-green" onclick="openModal(event)">
@@ -1767,7 +1812,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const WEBHOOK_URL  = 'https://ecomidia-n8n.misrsj.easypanel.host/webhook/p4-consultoria';
   const WEBHOOK_URL2 = 'https://n8n.srv1095468.hstgr.cloud/webhook/Diagnostico-organico';
   const FUNIL = 'diagnostico-organico';
-  const CALENDAR_URL = 'https://calendar.app.google/zaNXcV4By3HUQuc88';
+  const CALENDAR_URL = 'https://wa.me/5519997258140?text=Vim%20da%20p%C3%A1gina%20de%20diagn%C3%B3stico%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio.';
 
   function maskPhone(input) {
     let raw = input.value.replace(/\D/g, '');
