@@ -1811,6 +1811,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // ── FORM ──
   const WEBHOOK_URL  = 'https://ecomidia-n8n.misrsj.easypanel.host/webhook/p4-consultoria';
   const WEBHOOK_URL2 = 'https://n8n.srv1095468.hstgr.cloud/webhook/Diagnostico-organico';
+  // ATENÇÃO: este secret fica embutido no JS público — não é autenticação real,
+  // apenas eleva a régua contra abuso casual (quem inspecionar o código-fonte
+  // consegue ler o valor, assim como lia a própria URL do webhook antes desta
+  // correção). Para controle de acesso de verdade seria preciso um proxy
+  // server-side guardando o secret fora do cliente. — taynara.souza
+  const WEBHOOK_SECRET = 'c470efd4088c5f06b9925a7ba080661225f2cd62839ab878'; // header auth do webhook n8n (Diagnostico-organico)
   const FUNIL = 'diagnostico-organico';
   const CALENDAR_URL = 'https://wa.me/5519997258140?text=Vim%20da%20p%C3%A1gina%20de%20diagn%C3%B3stico%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio.';
 
@@ -1856,6 +1862,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     if (canais.length === 0) { document.getElementById('err-canais').classList.add('show'); ok = false; } else document.getElementById('err-canais').classList.remove('show');
 
     return ok;
+  }
+
+  // Evita Formula/CSV Injection: campos de texto livre não podem virar fórmulas
+  // executáveis quando o lead cai na planilha (Google Sheets/Excel).
+  function sanitizeForSheets(obj) {
+    const risky = /^[=+\-@\t\r]/;
+    const out = {};
+    Object.keys(obj).forEach(function(k) {
+      const v = obj[k];
+      out[k] = (typeof v === 'string' && risky.test(v)) ? "'" + v : v;
+    });
+    return out;
   }
 
   async function handleSubmit(e) {
@@ -1955,8 +1973,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     var qualified  = highBudget && !hasOutros;
     var mqlTag     = qualified ? 'qualified_lead' : 'lead_disqualified';
     payload.mql    = qualified ? 'sim' : 'não';
-    const bodyNew  = JSON.stringify(payload);
-    const bodyOld  = JSON.stringify(payloadOld);
+    const bodyNew  = JSON.stringify(sanitizeForSheets(payload));
+    const bodyOld  = JSON.stringify(sanitizeForSheets(payloadOld));
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: mqlTag,
@@ -1972,7 +1990,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       eventTimeout: 2000,
     });
     if (WEBHOOK_URL)  fetch(WEBHOOK_URL,  { method: 'POST', headers: {'Content-Type':'application/json'}, body: bodyNew,  keepalive: true }).catch(function() {});
-    if (WEBHOOK_URL2) fetch(WEBHOOK_URL2, { method: 'POST', headers: {'Content-Type':'application/json'}, body: bodyOld, keepalive: true }).catch(function() {});
+    if (WEBHOOK_URL2) fetch(WEBHOOK_URL2, { method: 'POST', headers: {'Content-Type':'application/json', 'x-p4-webhook-secret': WEBHOOK_SECRET}, body: bodyOld, keepalive: true }).catch(function() {});
   }
 
   ['f-nome','f-email','f-wpp','f-wpp2'].forEach(id => {
