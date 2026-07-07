@@ -9,3 +9,11 @@ desktop.ini
 npm-debug.log*
 pnpm-debug.log*
 yarn-error.log*
+
+# Segurança e artefatos (padronização P4 2026-07)
+api/config.php
+api/.rate-limit/
+.claude/
+Thumbs.db
+*.log
+*.tmp
