@@ -53,7 +53,7 @@ O **LP DiagnósticoAds** foi construído para capturar e qualificar leads de tr�
 
 - **Frontend:** HTML5, CSS3, JavaScript (vanilla + Vite build)
 - **Build:** Vite (`vite.config.ts`)
-- **Integração:** Webhook n8n (direto, sem proxy)
+- **Integração:** Webhook n8n via **proxy PHP** server-side (`api/lead-proxy.php`) — o segredo do webhook fica no servidor, fora do JS público
 - **SEO:** `sitemap.xml`, `robots.txt`
 - **Deploy:** HostGator/cPanel — upload manual do conteúdo de `dist/`
 
@@ -80,14 +80,68 @@ O **LP DiagnósticoAds** foi construído para capturar e qualificar leads de tr�
 7. Lead é gravado nas abas **organico** e **banco de dados** do Google Sheets.
 
 ```mermaid
-flowchart LR
-    A[Acesso Orgânico] --> B[Tracking UTM / Referrer]
-    B --> C[Preenchimento do formulário]
-    C --> D[Cálculo de MQL por investimento e canais]
-    D --> E[Payload enviado ao webhook n8n]
-    E --> F[Deduplicação por telefone]
-    F --> G[Gravação na aba organico]
-    F --> H[Gravação na aba banco de dados]
+flowchart TD
+    subgraph LP["🌐 Landing Page (navegador)"]
+        IN["Inputs do formulário<br/>nome · e-mail · WhatsApp<br/>Investimento + Canais<br/>+ tracking: utm_* · fbclid · src · sck · a_id"]
+    end
+    subgraph SRV["🔒 Servidor HostGator (cPanel)"]
+        PHP["api/lead-proxy.php<br/>anexa header x-p4-webhook-secret"]
+    end
+    subgraph WF["⚙️ n8n — workflow LP-diagnostico"]
+        WH(["▶ TRIGGER · Webhook<br/>POST /webhook/Diagnostico-organico · headerAuth"])
+        PARSE["Parse<br/>normaliza telefone · recalcula MQL no servidor<br/>timestamp do servidor · tracking completo"]
+        VAL["Validar campos obrigatórios"]
+        DVAL{"Lead válido?"}
+        READ["Ler banco de dados<br/>HTTP → Google Sheets API · só coluna E"]
+        REF["Reformatar leitura"]
+        DUP["Filtrar duplicata<br/>dedup por WhatsApp"]
+        DDUP{"Duplicata?"}
+        FMT["Format lead<br/>calcula Orgânico? (sim/não)"]
+        LCRM["Ler CRM"]
+        BDUP["Buscar duplicata CRM<br/>e-mail → Telefone 1"]
+        DCRM{"Existe no CRM?"}
+        PREP["Preparar arquivo"]
+        ARC["Arquivar CRM antigo"]
+        UPD["Atualizar CRM (in-place)<br/>Funil · Data · MQL · Pergunta"]
+        FCRM["Format CRM"]
+        NEW["Criar lead no CRM<br/>Telefone 1 · Orgânico?"]
+        DESC["Formatar descarte"]
+        REG["Registrar descarte"]
+    end
+    subgraph SHEETS["📊 Google Sheets · credencial Cockpit"]
+        SBD[("banco de dados<br/>100% dos leads")]
+        SSEG[("aba Organico")]
+        SARC[("Archived Leads")]
+        SDESC[("Descarte")]
+    end
+    subgraph CRMBOX["📇 CRM comercial · credencial Cockpit"]
+        CRMDB[("aba CRM<br/>Telefone 1 · Orgânico?")]
+    end
+    subgraph OUT["🔌 Integrações e saídas"]
+        GMAIL["✉️ Gmail<br/>alerta de descarte"]
+        CONS["p4-consultoria<br/>2ª instância n8n"]
+        ERR[["🚨 Error Workflow<br/>Alerta de Erro - Leads"]]
+    end
+
+    IN --> PHP
+    IN -. 2º destino .-> CONS
+    PHP --> WH --> PARSE --> VAL --> DVAL
+    DVAL -- inválido --> DESC
+    DVAL -- válido --> READ --> REF --> DUP --> DDUP
+    DDUP -- duplicata --> DESC
+    DDUP -- novo --> FMT
+    FMT --> SBD
+    FMT --> SSEG
+    FMT --> LCRM --> BDUP --> DCRM
+    DCRM -- existe --> PREP --> ARC
+    ARC --> SARC
+    ARC --> UPD --> CRMDB
+    DCRM -- novo --> FCRM --> NEW --> CRMDB
+    DESC --> REG --> SDESC
+    REG --> GMAIL
+    READ -. exceção .-> ERR
+    SBD -. exceção .-> ERR
+    CRMDB -. exceção .-> ERR
 ```
 
 ## Diferenciais de Engenharia
@@ -144,6 +198,29 @@ npm run build
 ## Deploy
 
 - **HostGator/cPanel:** upload manual do conteúdo de `dist/` via Gerenciador de Arquivos ou FTP.
+
+## Automação de leads (estado atual — 2026-07)
+
+O lead **não é mais enviado direto do navegador ao n8n**. A página chama o **proxy PHP**
+`api/lead-proxy.php` (mesmo domínio, sem nenhum segredo); o proxy anexa o header de autenticação
+`x-p4-webhook-secret` **no servidor** e repassa ao webhook n8n `POST /webhook/Diagnostico-organico`.
+
+O workflow n8n **`LP-diagnostico`** executa o pipeline completo (funil orgânico → aba **Organico**):
+
+- **Valida** os obrigatórios e **deduplica por WhatsApp** — sem descarte silencioso.
+- Grava 100% dos leads em `banco de dados` e na aba de segmentação **Organico** (classificação por
+  funil pareado).
+- Alimenta o **CRM comercial**: dedup por e-mail → `Telefone 1`, arquiva o registro antigo em
+  `Archived Leads` e atualiza in-place, ou cria um novo — preenchendo a coluna **`Orgânico?`**
+  (`sim`/`não`) conforme a origem do lead.
+- **Recalcula MQL no servidor** (nunca confia no cliente) e usa **timestamp do servidor**.
+- Captura tracking completo: `utm_source/medium/campaign/content/term/id`, `fbclid`, `src`, `sck`,
+  `a_id`, `channel`, `referrer`, `page_url`.
+- Registra descartes (inválido/duplicata) na aba `Descarte` e **notifica por e-mail** (Gmail).
+- Erros reais caem no **Error Workflow** `Alerta de Erro - Leads`.
+
+📄 Documentação detalhada da automação: a **Sticky Note "Documentação da automação"** dentro do
+workflow `LP-diagnostico` no n8n, e — quando presente — o `automation/README.md` do projeto.
 
 ## Licença
 
